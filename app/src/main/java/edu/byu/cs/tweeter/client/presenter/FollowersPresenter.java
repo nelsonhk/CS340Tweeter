@@ -3,10 +3,7 @@ package edu.byu.cs.tweeter.client.presenter;
 import android.util.Log;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import edu.byu.cs.tweeter.client.backgroundTask.GetFollowersTask;
 import edu.byu.cs.tweeter.client.cache.Cache;
 import edu.byu.cs.tweeter.client.model.service.FollowService;
 import edu.byu.cs.tweeter.client.model.service.UserService;
@@ -19,39 +16,19 @@ public class FollowersPresenter {
     private boolean hasMorePages;
     private boolean isLoading = false;
     private static final String LOG_TAG = "FollowersPresenter";
+    FollowersView followersView;
 
-    public void setLastFollower(User lastFollower) {
-        this.lastFollower = lastFollower;
-    }
-
-    public boolean isLoading() {
-        return isLoading;
-    }
-
-    public void setLoading(boolean loading) {
-        isLoading = loading;
-    }
-
-    public void setHasMorePages(boolean hasMorePages) {
-        this.hasMorePages = hasMorePages;
-    }
-
-    public boolean isHasMorePages() {
-        return hasMorePages;
+    public FollowersPresenter(FollowersView followersView) {
+        this.followersView = followersView;
     }
 
     public interface FollowersView {
         void addItems(List<User> newUsers);
         void displayErrorMessage(String message);
         void setLoadingFooter(boolean isLoading);
+
         void startUserActivity(User user);
         void displayInfoMessage();
-    }
-
-    FollowersView followersView;
-
-    public FollowersPresenter(FollowersView followersView) {
-        this.followersView = followersView;
     }
 
     public void loadMoreFollowers(User user) {
@@ -104,6 +81,26 @@ public class FollowersPresenter {
         public void getUserFailed(String message) {
             followersView.displayErrorMessage(message);
         }
+    }
+
+    public void setLastFollower(User lastFollower) {
+        this.lastFollower = lastFollower;
+    }
+
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+    }
+
+    public void setHasMorePages(boolean hasMorePages) {
+        this.hasMorePages = hasMorePages;
+    }
+
+    public boolean isHasMorePages() {
+        return hasMorePages;
     }
 
 }
