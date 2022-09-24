@@ -150,11 +150,6 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Fo
                 @Override
                 public void onClick(View view) {
                     followersPresenter.getUser(userAlias.getText().toString());
-//                    GetUserTask getUserTask = new GetUserTask(Cache.getInstance().getCurrUserAuthToken(),
-//                            userAlias.getText().toString(), new GetUserHandler());
-//                    ExecutorService executor = Executors.newSingleThreadExecutor();
-//                    executor.execute(getUserTask);
-//                    Toast.makeText(getContext(), "Getting user's profile...", Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -173,29 +168,6 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Fo
             Picasso.get().load(user.getImageUrl()).into(userImage);
 
         }
-
-//        /**
-//         * Message handler (i.e., observer) for GetUserTask.
-//         */
-//        private class GetUserHandler extends Handler {
-//            @Override
-//            public void handleMessage(@NonNull Message msg) {
-//                boolean success = msg.getData().getBoolean(GetUserTask.SUCCESS_KEY);
-//                if (success) {
-//                    User user = (User) msg.getData().getSerializable(GetUserTask.USER_KEY);
-//
-//                    Intent intent = new Intent(getContext(), MainActivity.class);
-//                    intent.putExtra(MainActivity.CURRENT_USER_KEY, user);
-//                    startActivity(intent);
-//                } else if (msg.getData().containsKey(GetUserTask.MESSAGE_KEY)) {
-//                    String message = msg.getData().getString(GetUserTask.MESSAGE_KEY);
-//                    Toast.makeText(getContext(), "Failed to get user's profile: " + message, Toast.LENGTH_LONG).show();
-//                } else if (msg.getData().containsKey(GetUserTask.EXCEPTION_KEY)) {
-//                    Exception ex = (Exception) msg.getData().getSerializable(GetUserTask.EXCEPTION_KEY);
-//                    Toast.makeText(getContext(), "Failed to get user's profile because of exception: " + ex.getMessage(), Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        }
     }
 
     /**
@@ -204,18 +176,6 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Fo
     private class FollowersRecyclerViewAdapter extends RecyclerView.Adapter<FollowersHolder> {
 
         private final List<User> users = new ArrayList<>();
-
-//        private User lastFollower;
-//
-//        private boolean hasMorePages;
-//        private boolean isLoading = false;
-
-//        /**
-//         * Creates an instance and loads the first page of following data.
-//         */
-//        FollowersRecyclerViewAdapter() {
-//            loadMoreItems();
-//        }
 
         /**
          * Adds new users to the list from which the RecyclerView retrieves the users it displays
@@ -320,10 +280,6 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Fo
         void loadMoreItems() {
             if (!followersPresenter.isLoading()) {   // This guard is important for avoiding a race condition in the scrolling code.
                 followersPresenter.loadMoreFollowers(user);
-//                GetFollowersTask getFollowersTask = new GetFollowersTask(Cache.getInstance().getCurrUserAuthToken(),
-//                        user, PAGE_SIZE, lastFollower, new GetFollowersHandler());
-//                ExecutorService executor = Executors.newSingleThreadExecutor();
-//                executor.execute(getFollowersTask);
             }
         }
 
@@ -343,34 +299,6 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Fo
         private void removeLoadingFooter() {
             removeItem(users.get(users.size() - 1));
         }
-
-
-//        /**
-//         * Message handler (i.e., observer) for GetFollowersTask.
-//         */
-//        private class GetFollowersHandler extends Handler {
-//            @Override
-//            public void handleMessage(@NonNull Message msg) {
-//                isLoading = false;
-//                removeLoadingFooter();
-//
-//                boolean success = msg.getData().getBoolean(GetFollowersTask.SUCCESS_KEY);
-//                if (success) {
-//                    List<User> followers = (List<User>) msg.getData().getSerializable(GetFollowersTask.FOLLOWERS_KEY);
-//                    hasMorePages = msg.getData().getBoolean(GetFollowersTask.MORE_PAGES_KEY);
-//
-//                    lastFollower = (followers.size() > 0) ? followers.get(followers.size() - 1) : null;
-//
-//                    followersRecyclerViewAdapter.addItems(followers);
-//                } else if (msg.getData().containsKey(GetFollowersTask.MESSAGE_KEY)) {
-//                    String message = msg.getData().getString(GetFollowersTask.MESSAGE_KEY);
-//                    Toast.makeText(getContext(), "Failed to get followers: " + message, Toast.LENGTH_LONG).show();
-//                } else if (msg.getData().containsKey(GetFollowersTask.EXCEPTION_KEY)) {
-//                    Exception ex = (Exception) msg.getData().getSerializable(GetFollowersTask.EXCEPTION_KEY);
-//                    Toast.makeText(getContext(), "Failed to get followers because of exception: " + ex.getMessage(), Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        }
     }
 
     /**
