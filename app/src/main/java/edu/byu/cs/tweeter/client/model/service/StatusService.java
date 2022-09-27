@@ -12,7 +12,9 @@ import java.util.concurrent.Executors;
 
 import edu.byu.cs.tweeter.client.backgroundTask.GetFeedTask;
 import edu.byu.cs.tweeter.client.backgroundTask.GetStoryTask;
+import edu.byu.cs.tweeter.client.backgroundTask.PostStatusTask;
 import edu.byu.cs.tweeter.client.cache.Cache;
+import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.client.view.main.feed.FeedFragment;
 import edu.byu.cs.tweeter.client.view.main.story.StoryFragment;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
@@ -20,6 +22,46 @@ import edu.byu.cs.tweeter.model.domain.Status;
 import edu.byu.cs.tweeter.model.domain.User;
 
 public class StatusService {
+
+
+    public interface PostStatusObserver {
+        void postStatusSuccess();
+        void postStatusFailed(String message);
+    }
+
+    public void postStatus(Status newStatus, PostStatusObserver postStatusObserver) {
+        PostStatusTask statusTask = new PostStatusTask(Cache.getInstance().getCurrUserAuthToken(),
+                newStatus, new PostStatusHandler(postStatusObserver));
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(statusTask);
+    }
+
+    // PostStatusHandler
+
+    private class PostStatusHandler extends Handler {
+
+        private PostStatusObserver postStatusObserver;
+
+        public PostStatusHandler(PostStatusObserver postStatusObserver) {
+            this.postStatusObserver = postStatusObserver;
+        }
+
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            boolean success = msg.getData().getBoolean(PostStatusTask.SUCCESS_KEY);
+            if (success) {
+                postStatusObserver.postStatusSuccess();
+//                infoToast.cancel();
+//                Toast.makeText(MainActivity.this, "Successfully Posted!", Toast.LENGTH_LONG).show();
+            } else if (msg.getData().containsKey(PostStatusTask.MESSAGE_KEY)) {
+                String message = msg.getData().getString(PostStatusTask.MESSAGE_KEY);
+                postStatusObserver.postStatusFailed("Failed to post status: " + message);
+            } else if (msg.getData().containsKey(PostStatusTask.EXCEPTION_KEY)) {
+                Exception ex = (Exception) msg.getData().getSerializable(PostStatusTask.EXCEPTION_KEY);
+                postStatusObserver.postStatusFailed("Failed to post status because of exception: " + ex.getMessage());
+            }
+        }
+    }
 
     public interface GetStoryObserver {
         void getStorySuccess(List<Status> statuses, boolean hasMorePages);

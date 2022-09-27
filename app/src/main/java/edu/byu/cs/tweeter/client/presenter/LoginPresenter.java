@@ -13,7 +13,7 @@ public class LoginPresenter implements UserService.LoginObserver {
         void displayErrorMessage(String message);
         void clearErrorMessage();
 
-        void navigateToUser(User user); //TODO: needs authToken?
+        void navigateToUser(User user);
     }
 
     private LoginView loginView;
