@@ -2,9 +2,6 @@ package edu.byu.cs.tweeter.client.view.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -22,29 +18,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import edu.byu.cs.client.R;
-import edu.byu.cs.tweeter.client.backgroundTask.FollowTask;
-import edu.byu.cs.tweeter.client.backgroundTask.GetFollowersCountTask;
-import edu.byu.cs.tweeter.client.backgroundTask.GetFollowingCountTask;
-import edu.byu.cs.tweeter.client.backgroundTask.IsFollowerTask;
-import edu.byu.cs.tweeter.client.backgroundTask.LogoutTask;
-import edu.byu.cs.tweeter.client.backgroundTask.PostStatusTask;
-import edu.byu.cs.tweeter.client.backgroundTask.UnfollowTask;
 import edu.byu.cs.tweeter.client.cache.Cache;
-import edu.byu.cs.tweeter.client.model.service.FollowService;
 import edu.byu.cs.tweeter.client.presenter.MainPresenter;
 import edu.byu.cs.tweeter.client.view.login.LoginActivity;
 import edu.byu.cs.tweeter.client.view.login.StatusDialogFragment;
-import edu.byu.cs.tweeter.model.domain.Status;
 import edu.byu.cs.tweeter.model.domain.User;
 
 /**
@@ -62,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements StatusDialogFragm
     private TextView followerCount;
     private Button followButton;
 
-    private MainPresenter mainPresenter = new MainPresenter(this);
+    private final MainPresenter mainPresenter = new MainPresenter(this);
 
     @Override
     public void displayInfoToast(String message) {

@@ -17,7 +17,7 @@ import edu.byu.cs.tweeter.model.domain.User;
 
 public class MainPresenter {
 
-    private MainView mainView;
+    private final MainView mainView;
 
     public MainPresenter(MainView mainView) {
         this.mainView = mainView;
@@ -172,11 +172,7 @@ public class MainPresenter {
 
         @Override
         public void getIsFollowingSuccess(boolean isFollowing) {
-            if (isFollowing) {
-                mainView.displayFollowButton(true);
-            } else {
-                mainView.displayFollowButton(false);
-            }
+            mainView.displayFollowButton(isFollowing);
         }
 
         @Override

@@ -22,15 +22,15 @@ public class UnfollowTask implements Runnable {
      * Auth token for logged-in user.
      * This user is the "follower" in the relationship.
      */
-    private AuthToken authToken;
+    private final AuthToken authToken;
     /**
      * The user that is being followed.
      */
-    private User followee;
+    private final User followee;
     /**
      * Message handler that will receive task results.
      */
-    private Handler messageHandler;
+    private final Handler messageHandler;
 
     public UnfollowTask(AuthToken authToken, User followee, Handler messageHandler) {
         this.authToken = authToken;

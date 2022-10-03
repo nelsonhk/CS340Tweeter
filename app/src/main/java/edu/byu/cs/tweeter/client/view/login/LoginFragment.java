@@ -34,7 +34,7 @@ public class LoginFragment extends Fragment implements LoginPresenter.LoginView 
     private EditText password;
     private TextView errorView;
 
-    private LoginPresenter loginPresenter = new LoginPresenter(this);
+    private final LoginPresenter loginPresenter = new LoginPresenter(this);
 
     /**
      * Creates an instance of the fragment and places the user and auth token in an arguments

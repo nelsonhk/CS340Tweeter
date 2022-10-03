@@ -20,11 +20,11 @@ public class LogoutTask implements Runnable {
     /**
      * Auth token for logged-in user.
      */
-    private AuthToken authToken;
+    private final AuthToken authToken;
     /**
      * Message handler that will receive task results.
      */
-    private Handler messageHandler;
+    private final Handler messageHandler;
 
     public LogoutTask(AuthToken authToken, Handler messageHandler) {
         this.authToken = authToken;

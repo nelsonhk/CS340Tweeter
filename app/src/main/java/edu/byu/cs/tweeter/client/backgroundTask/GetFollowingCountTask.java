@@ -22,16 +22,16 @@ public class GetFollowingCountTask implements Runnable {
     /**
      * Auth token for logged-in user.
      */
-    private AuthToken authToken;
+    private final AuthToken authToken;
     /**
      * The user whose following count is being retrieved.
      * (This can be any user, not just the currently logged-in user.)
      */
-    private User targetUser;
+    private final User targetUser;
     /**
      * Message handler that will receive task results.
      */
-    private Handler messageHandler;
+    private final Handler messageHandler;
 
     public GetFollowingCountTask(AuthToken authToken, User targetUser, Handler messageHandler) {
         this.authToken = authToken;

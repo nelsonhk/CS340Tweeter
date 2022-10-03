@@ -25,27 +25,27 @@ public class RegisterTask implements Runnable {
     /**
      * The user's first name.
      */
-    private String firstName;
+    private final String firstName;
     /**
      * The user's last name.
      */
-    private String lastName;
+    private final String lastName;
     /**
      * The user's username (or "alias" or "handle"). E.g., "@susan".
      */
-    private String username;
+    private final String username;
     /**
      * The user's password.
      */
-    private String password;
+    private final String password;
     /**
      * The base-64 encoded bytes of the user's profile image.
      */
-    private String image;
+    private final String image;
     /**
      * Message handler that will receive task results.
      */
-    private Handler messageHandler;
+    private final Handler messageHandler;
 
     public RegisterTask(String firstName, String lastName, String username, String password,
                         String image, Handler messageHandler) {

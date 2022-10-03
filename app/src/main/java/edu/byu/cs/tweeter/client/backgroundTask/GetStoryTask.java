@@ -29,25 +29,25 @@ public class GetStoryTask implements Runnable {
     /**
      * Auth token for logged-in user.
      */
-    private AuthToken authToken;
+    private final AuthToken authToken;
     /**
      * The user whose story is being retrieved.
      * (This can be any user, not just the currently logged-in user.)
      */
-    private User targetUser;
+    private final User targetUser;
     /**
      * Maximum number of statuses to return (i.e., page size).
      */
-    private int limit;
+    private final int limit;
     /**
      * The last status returned in the previous page of results (can be null).
      * This allows the new page to begin where the previous page ended.
      */
-    private Status lastStatus;
+    private final Status lastStatus;
     /**
      * Message handler that will receive task results.
      */
-    private Handler messageHandler;
+    private final Handler messageHandler;
 
     public GetStoryTask(AuthToken authToken, User targetUser, int limit, Status lastStatus,
                         Handler messageHandler) {

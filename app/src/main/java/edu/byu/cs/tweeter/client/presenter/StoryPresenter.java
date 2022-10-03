@@ -12,7 +12,7 @@ import edu.byu.cs.tweeter.model.domain.User;
 public class StoryPresenter {
 
     private static final int PAGE_SIZE = 10;
-    private StoryView view;
+    private final StoryView view;
     private Status lastStatus;
     private static final String LOG_TAG = "StoryPresenter";
     private boolean hasMorePages;

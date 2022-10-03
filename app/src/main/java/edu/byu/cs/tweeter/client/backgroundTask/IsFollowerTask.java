@@ -24,19 +24,19 @@ public class IsFollowerTask implements Runnable {
     /**
      * Auth token for logged-in user.
      */
-    private AuthToken authToken;
+    private final AuthToken authToken;
     /**
      * The alleged follower.
      */
-    private User follower;
+    private final User follower;
     /**
      * The alleged followee.
      */
-    private User followee;
+    private final User followee;
     /**
      * Message handler that will receive task results.
      */
-    private Handler messageHandler;
+    private final Handler messageHandler;
 
     public IsFollowerTask(AuthToken authToken, User follower, User followee, Handler messageHandler) {
         this.authToken = authToken;

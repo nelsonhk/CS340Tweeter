@@ -23,7 +23,7 @@ public class RegisterPresenter implements UserService.RegisterObserver{
         void navigateToUser(User user);
     }
 
-    private RegisterView registerView;
+    private final RegisterView registerView;
 
     public RegisterPresenter(RegisterView registerView) {
         this.registerView = registerView;

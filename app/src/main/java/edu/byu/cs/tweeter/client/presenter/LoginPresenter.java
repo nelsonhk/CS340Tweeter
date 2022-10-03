@@ -16,7 +16,7 @@ public class LoginPresenter implements UserService.LoginObserver {
         void navigateToUser(User user);
     }
 
-    private LoginView loginView;
+    private final LoginView loginView;
 
     public LoginPresenter(LoginView loginView) {
         this.loginView = loginView;

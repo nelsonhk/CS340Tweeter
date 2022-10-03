@@ -12,7 +12,7 @@ import edu.byu.cs.tweeter.model.domain.User;
 
 public class FeedPresenter {
 
-    private FeedView feedView;
+    private final FeedView feedView;
     private static final int PAGE_SIZE = 10;
     private Status lastStatus;
     private boolean hasMorePages;

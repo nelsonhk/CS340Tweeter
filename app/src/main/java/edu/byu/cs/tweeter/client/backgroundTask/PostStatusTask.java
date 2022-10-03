@@ -21,16 +21,16 @@ public class PostStatusTask implements Runnable {
     /**
      * Auth token for logged-in user.
      */
-    private AuthToken authToken;
+    private final AuthToken authToken;
     /**
      * The new status being sent. Contains all properties of the status,
      * including the identity of the user sending the status.
      */
-    private Status status;
+    private final Status status;
     /**
      * Message handler that will receive task results.
      */
-    private Handler messageHandler;
+    private final Handler messageHandler;
 
     public PostStatusTask(AuthToken authToken, Status status, Handler messageHandler) {
         this.authToken = authToken;

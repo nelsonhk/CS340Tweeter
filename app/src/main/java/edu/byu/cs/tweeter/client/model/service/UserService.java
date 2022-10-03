@@ -2,7 +2,6 @@ package edu.byu.cs.tweeter.client.model.service;
 
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -14,7 +13,6 @@ import edu.byu.cs.tweeter.client.backgroundTask.LoginTask;
 import edu.byu.cs.tweeter.client.backgroundTask.LogoutTask;
 import edu.byu.cs.tweeter.client.backgroundTask.RegisterTask;
 import edu.byu.cs.tweeter.client.cache.Cache;
-import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
@@ -33,7 +31,7 @@ public class UserService {
 
     private class LogoutHandler extends Handler {
 
-        private LogoutObserver logoutObserver;
+        private final LogoutObserver logoutObserver;
 
         public LogoutHandler(LogoutObserver logoutObserver) {
             this.logoutObserver = logoutObserver;
@@ -98,7 +96,7 @@ public class UserService {
      */
     private class LoginHandler extends Handler {
 
-        private LoginObserver loginObserver;
+        private final LoginObserver loginObserver;
 
         public LoginHandler(LoginObserver loginObserver) {
             this.loginObserver = loginObserver;
@@ -130,7 +128,7 @@ public class UserService {
     // RegisterHandler
     private class RegisterHandler extends Handler {
 
-        private RegisterObserver registerObserver;
+        private final RegisterObserver registerObserver;
 
         public RegisterHandler(RegisterObserver registerObserver) {
             this.registerObserver = registerObserver;
@@ -164,7 +162,7 @@ public class UserService {
      */
     private class GetUserHandler extends Handler {
 
-        private GetUserObserver getUserObserver;
+        private final GetUserObserver getUserObserver;
 
         public GetUserHandler(GetUserObserver getUserObserver) {
             this.getUserObserver = getUserObserver;

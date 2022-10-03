@@ -26,15 +26,15 @@ public class LoginTask implements Runnable {
     /**
      * The user's username (or "alias" or "handle"). E.g., "@susan".
      */
-    private String username;
+    private final String username;
     /**
      * The user's password.
      */
-    private String password;
+    private final String password;
     /**
      * Message handler that will receive task results.
      */
-    private Handler messageHandler;
+    private final Handler messageHandler;
 
     public LoginTask(String username, String password, Handler messageHandler) {
         this.username = username;

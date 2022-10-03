@@ -23,15 +23,15 @@ public class GetUserTask implements Runnable {
     /**
      * Auth token for logged-in user.
      */
-    private AuthToken authToken;
+    private final AuthToken authToken;
     /**
      * Alias (or handle) for user whose profile is being retrieved.
      */
-    private String alias;
+    private final String alias;
     /**
      * Message handler that will receive task results.
      */
-    private Handler messageHandler;
+    private final Handler messageHandler;
 
     public GetUserTask(AuthToken authToken, String alias, Handler messageHandler) {
         this.authToken = authToken;

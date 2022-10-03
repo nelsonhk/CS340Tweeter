@@ -28,25 +28,25 @@ public class GetFollowersTask implements Runnable {
     /**
      * Auth token for logged-in user.
      */
-    private AuthToken authToken;
+    private final AuthToken authToken;
     /**
      * The user whose followers are being retrieved.
      * (This can be any user, not just the currently logged-in user.)
      */
-    private User targetUser;
+    private final User targetUser;
     /**
      * Maximum number of followers to return (i.e., page size).
      */
-    private int limit;
+    private final int limit;
     /**
      * The last follower returned in the previous page of results (can be null).
      * This allows the new page to begin where the previous page ended.
      */
-    private User lastFollower;
+    private final User lastFollower;
     /**
      * Message handler that will receive task results.
      */
-    private Handler messageHandler;
+    private final Handler messageHandler;
 
     public GetFollowersTask(AuthToken authToken, User targetUser, int limit, User lastFollower,
                             Handler messageHandler) {

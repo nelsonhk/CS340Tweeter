@@ -40,7 +40,7 @@ public class StatusService {
 
     private class PostStatusHandler extends Handler {
 
-        private PostStatusObserver postStatusObserver;
+        private final PostStatusObserver postStatusObserver;
 
         public PostStatusHandler(PostStatusObserver postStatusObserver) {
             this.postStatusObserver = postStatusObserver;
@@ -81,7 +81,7 @@ public class StatusService {
      */
     private class GetStoryHandler extends Handler {
 
-        private GetStoryObserver getStoryObserver;
+        private final GetStoryObserver getStoryObserver;
 
         public GetStoryHandler(GetStoryObserver getStoryObserver) {
             this.getStoryObserver = getStoryObserver;
@@ -122,7 +122,7 @@ public class StatusService {
      */
     private class GetFeedHandler extends Handler {
 
-        private GetFeedObserver getFeedObserver;
+        private final GetFeedObserver getFeedObserver;
 
         public GetFeedHandler(GetFeedObserver getFeedObserver) {
             this.getFeedObserver = getFeedObserver;

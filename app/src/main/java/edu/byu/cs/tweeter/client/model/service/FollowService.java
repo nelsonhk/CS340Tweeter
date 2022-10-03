@@ -2,7 +2,6 @@ package edu.byu.cs.tweeter.client.model.service;
 
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -11,7 +10,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import edu.byu.cs.client.R;
 import edu.byu.cs.tweeter.client.backgroundTask.FollowTask;
 import edu.byu.cs.tweeter.client.backgroundTask.GetFollowersCountTask;
 import edu.byu.cs.tweeter.client.backgroundTask.GetFollowersTask;
@@ -20,7 +18,6 @@ import edu.byu.cs.tweeter.client.backgroundTask.GetFollowingTask;
 import edu.byu.cs.tweeter.client.backgroundTask.IsFollowerTask;
 import edu.byu.cs.tweeter.client.backgroundTask.UnfollowTask;
 import edu.byu.cs.tweeter.client.cache.Cache;
-import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
@@ -41,7 +38,7 @@ public class FollowService {
 
     private class GetFollowingCountHandler extends Handler {
 
-        private GetFollowingCountObserver getFollowingCountObserver;
+        private final GetFollowingCountObserver getFollowingCountObserver;
 
         public GetFollowingCountHandler(GetFollowingCountObserver getFollowingCountObserver) {
             this.getFollowingCountObserver = getFollowingCountObserver;
@@ -77,7 +74,7 @@ public class FollowService {
 
     private class GetFollowersCountHandler extends Handler {
 
-        private GetFollowerCountObserver getFollowerCountObserver;
+        private final GetFollowerCountObserver getFollowerCountObserver;
 
         public GetFollowersCountHandler(GetFollowerCountObserver getFollowerCountObserver) {
             this.getFollowerCountObserver = getFollowerCountObserver;
@@ -113,8 +110,8 @@ public class FollowService {
 
     private class FollowHandler extends Handler {
 
-        private FollowObserver followObserver;
-        private User selectedUser;
+        private final FollowObserver followObserver;
+        private final User selectedUser;
 
         public FollowHandler(FollowObserver followObserver, User selectedUser) {
             this.followObserver = followObserver;
@@ -150,8 +147,8 @@ public class FollowService {
 
     private class UnfollowHandler extends Handler {
 
-        private UnfollowObserver unfollowObserver;
-        private User selectedUser;
+        private final UnfollowObserver unfollowObserver;
+        private final User selectedUser;
 
         public UnfollowHandler(UnfollowObserver unfollowObserver, User selectedUser) {
             this.unfollowObserver = unfollowObserver;
@@ -188,7 +185,7 @@ public class FollowService {
 
     private class IsFollowerHandler extends Handler {
 
-        private GetIsFollowingObserver getIsFollowingObserver;
+        private final GetIsFollowingObserver getIsFollowingObserver;
 
         public IsFollowerHandler(GetIsFollowingObserver getIsFollowingObserver) {
             this.getIsFollowingObserver = getIsFollowingObserver;
@@ -201,11 +198,7 @@ public class FollowService {
                 boolean isFollower = msg.getData().getBoolean(IsFollowerTask.IS_FOLLOWER_KEY);
 
                 // If logged in user if a follower of the selected user, display the follow button as "following"
-                if (isFollower) {
-                    getIsFollowingObserver.getIsFollowingSuccess(true);
-                } else {
-                    getIsFollowingObserver.getIsFollowingSuccess(false);
-                }
+                getIsFollowingObserver.getIsFollowingSuccess(isFollower);
             } else if (msg.getData().containsKey(IsFollowerTask.MESSAGE_KEY)) {
                 String message = msg.getData().getString(IsFollowerTask.MESSAGE_KEY);
                 getIsFollowingObserver.getIsFollowingFailed("Failed to determine following relationship: " + message);
@@ -234,7 +227,7 @@ public class FollowService {
      */
     private class GetFollowingHandler extends Handler {
 
-        private GetFollowingObserver getFollowingObserver;
+        private final GetFollowingObserver getFollowingObserver;
 
         public GetFollowingHandler(GetFollowingObserver getFollowingObserver) {
             this.getFollowingObserver = getFollowingObserver;
