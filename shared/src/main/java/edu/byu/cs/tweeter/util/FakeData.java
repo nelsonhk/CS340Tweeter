@@ -89,7 +89,7 @@ public class FakeData {
         return instance;
     }
 
-    private FakeData() {
+    public FakeData() {
         if (getFakeUsers() != getFakeUsers()) {
             // Verify that getFakeUsers always returns the same list of users.
             // (This could be violated by mock implementations of getFakeUsers.)
