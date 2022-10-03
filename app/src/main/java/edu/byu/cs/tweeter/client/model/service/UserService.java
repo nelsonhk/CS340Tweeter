@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.client.model.service;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
@@ -13,14 +14,15 @@ import edu.byu.cs.tweeter.client.model.service.backgroundTaskRefactored.GetUserT
 import edu.byu.cs.tweeter.client.model.service.backgroundTaskRefactored.LoginTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTaskRefactored.LogoutTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTaskRefactored.RegisterTask;
+import edu.byu.cs.tweeter.client.model.service.handler.BackgroundTaskHandler;
+import edu.byu.cs.tweeter.client.model.service.observer.ServiceObserver;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
 public class UserService {
 
-    public interface LogoutObserver {
+    public interface LogoutObserver extends ServiceObserver {
         void logoutSuccess();
-        void logoutFailed(String message);
     }
 
     public void logout(LogoutObserver logoutObserver) {
@@ -29,42 +31,49 @@ public class UserService {
         executor.execute(logoutTask);
     }
 
-    private class LogoutHandler extends Handler {
+    private class LogoutHandler extends BackgroundTaskHandler<LogoutObserver> {
 
-        private final LogoutObserver logoutObserver;
+//        private final LogoutObserver logoutObserver;
 
         public LogoutHandler(LogoutObserver logoutObserver) {
-            this.logoutObserver = logoutObserver;
+            super(logoutObserver);
+//            this.logoutObserver = logoutObserver;
         }
 
         @Override
-        public void handleMessage(@NonNull Message msg) {
-            boolean success = msg.getData().getBoolean(LogoutTask.SUCCESS_KEY);
-            if (success) {
-                logoutObserver.logoutSuccess();
-            } else if (msg.getData().containsKey(LogoutTask.MESSAGE_KEY)) {
-                String message = msg.getData().getString(LogoutTask.MESSAGE_KEY);
-                logoutObserver.logoutFailed("Failed to logout: " + message);
-            } else if (msg.getData().containsKey(LogoutTask.EXCEPTION_KEY)) {
-                Exception ex = (Exception) msg.getData().getSerializable(LogoutTask.EXCEPTION_KEY);
-                logoutObserver.logoutFailed("Failed to logout because of exception: " + ex.getMessage());
-            }
+        protected void handleSuccessMessage(LogoutObserver observer, Bundle data) {
+            observer.logoutSuccess();
         }
+
+//        @Override
+//        public void handleMessage(@NonNull Message msg) {
+//            boolean success = msg.getData().getBoolean(LogoutTask.SUCCESS_KEY);
+//            if (success) {
+//                logoutObserver.logoutSuccess();
+//            } else if (msg.getData().containsKey(LogoutTask.MESSAGE_KEY)) {
+//                String message = msg.getData().getString(LogoutTask.MESSAGE_KEY);
+//                logoutObserver.handleFailure("Failed to logout: " + message);
+//            } else if (msg.getData().containsKey(LogoutTask.EXCEPTION_KEY)) {
+//                Exception ex = (Exception) msg.getData().getSerializable(LogoutTask.EXCEPTION_KEY);
+//                logoutObserver.handleFailure("Failed to logout because of exception: " + ex.getMessage());
+//            }
+//        }
+
     }
 
-    public interface LoginObserver {
+    public interface LoginObserver extends ServiceObserver {
         void loginSucceeded(User user, AuthToken authToken);
-        void loginFailed(String message);
+//        void handleFailure(String message);
     }
 
-    public interface RegisterObserver {
+    public interface RegisterObserver extends ServiceObserver {
         void registerSucceeded(User user, AuthToken authToken);
-        void registerFailed(String message);
+//        void handleFailure(String message);
     }
 
-    public interface GetUserObserver {
+    public interface GetUserObserver extends ServiceObserver {
         void getUserSucceeded(User user);
-        void getUserFailed(String message);
+//        void handleFailure(String message);
     }
 
     public void getUser(String userAlias, GetUserObserver getUserObserver) {
@@ -117,10 +126,10 @@ public class UserService {
 
             } else if (msg.getData().containsKey(LoginTask.MESSAGE_KEY)) {
                 String message = msg.getData().getString(LoginTask.MESSAGE_KEY);
-                loginObserver.loginFailed("Failed to login: " + message);
+                loginObserver.handleFailure("Failed to login: " + message);
             } else if (msg.getData().containsKey(LoginTask.EXCEPTION_KEY)) {
                 Exception ex = (Exception) msg.getData().getSerializable(LoginTask.EXCEPTION_KEY);
-                loginObserver.loginFailed("Failed to login because of exception: " + ex.getMessage());
+                loginObserver.handleFailure("Failed to login because of exception: " + ex.getMessage());
             }
         }
     }
@@ -148,11 +157,11 @@ public class UserService {
 
             } else if (msg.getData().containsKey(RegisterTask.MESSAGE_KEY)) {
                 String message = msg.getData().getString(RegisterTask.MESSAGE_KEY);
-                registerObserver.registerFailed("Failed to register: " + message);
+                registerObserver.handleFailure("Failed to register: " + message);
             } else if (msg.getData().containsKey(RegisterTask.EXCEPTION_KEY)) {
                 Exception ex = (Exception) msg.getData().getSerializable(RegisterTask.EXCEPTION_KEY);
                 String message = ex.getMessage();
-                registerObserver.registerFailed("Failed to register because of exception: " + message);
+                registerObserver.handleFailure("Failed to register because of exception: " + message);
             }
         }
     }
@@ -176,10 +185,10 @@ public class UserService {
                 getUserObserver.getUserSucceeded(user);
             } else if (msg.getData().containsKey(GetUserTask.MESSAGE_KEY)) {
                 String message = msg.getData().getString(GetUserTask.MESSAGE_KEY);
-                getUserObserver.getUserFailed("Failed to get user's profile: " + message);
+                getUserObserver.handleFailure("Failed to get user's profile: " + message);
             } else if (msg.getData().containsKey(GetUserTask.EXCEPTION_KEY)) {
                 Exception ex = (Exception) msg.getData().getSerializable(GetUserTask.EXCEPTION_KEY);
-                getUserObserver.getUserFailed("Failed to get user's profile because of exception: " + ex.getMessage());
+                getUserObserver.handleFailure("Failed to get user's profile because of exception: " + ex.getMessage());
             }
         }
     }
