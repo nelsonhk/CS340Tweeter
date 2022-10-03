@@ -97,7 +97,7 @@ public class RegisterPresenter implements UserService.RegisterObserver{
     }
 
     @Override
-    public void registerFailed(String message) {
+    public void handleFailure(String message) {
         registerView.clearInfoMessage();
         registerView.clearErrorMessage();
 

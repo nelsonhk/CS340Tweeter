@@ -13,6 +13,7 @@ import edu.byu.cs.tweeter.client.cache.Cache;
 import edu.byu.cs.tweeter.client.model.service.backgroundTaskRefactored.GetFeedTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTaskRefactored.GetStoryTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTaskRefactored.PostStatusTask;
+import edu.byu.cs.tweeter.client.model.service.observer.ServiceObserver;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.Status;
 import edu.byu.cs.tweeter.model.domain.User;
@@ -20,9 +21,9 @@ import edu.byu.cs.tweeter.model.domain.User;
 public class StatusService {
 
 
-    public interface PostStatusObserver {
+    public interface PostStatusObserver extends ServiceObserver {
         void postStatusSuccess();
-        void postStatusFailed(String message);
+//        void handleFailure(String message);
     }
 
     public void postStatus(Status newStatus, PostStatusObserver postStatusObserver) {
@@ -51,17 +52,17 @@ public class StatusService {
 //                Toast.makeText(MainActivity.this, "Successfully Posted!", Toast.LENGTH_LONG).show();
             } else if (msg.getData().containsKey(PostStatusTask.MESSAGE_KEY)) {
                 String message = msg.getData().getString(PostStatusTask.MESSAGE_KEY);
-                postStatusObserver.postStatusFailed("Failed to post status: " + message);
+                postStatusObserver.handleFailure("Failed to post status: " + message);
             } else if (msg.getData().containsKey(PostStatusTask.EXCEPTION_KEY)) {
                 Exception ex = (Exception) msg.getData().getSerializable(PostStatusTask.EXCEPTION_KEY);
-                postStatusObserver.postStatusFailed("Failed to post status because of exception: " + ex.getMessage());
+                postStatusObserver.handleFailure("Failed to post status because of exception: " + ex.getMessage());
             }
         }
     }
 
-    public interface GetStoryObserver {
+    public interface GetStoryObserver extends ServiceObserver {
         void getStorySuccess(List<Status> statuses, boolean hasMorePages);
-        void getStoryFail(String message);
+//        void handleFailure(String message);
     }
 
     public void getStory(User user, int PAGE_SIZE, Status lastStatus,
@@ -92,17 +93,17 @@ public class StatusService {
                 getStoryObserver.getStorySuccess(statuses, hasMorePages);
             } else if (msg.getData().containsKey(GetStoryTask.MESSAGE_KEY)) {
                 String message = msg.getData().getString(GetStoryTask.MESSAGE_KEY);
-                getStoryObserver.getStoryFail("Failed to get story: " + message);
+                getStoryObserver.handleFailure("Failed to get story: " + message);
             } else if (msg.getData().containsKey(GetStoryTask.EXCEPTION_KEY)) {
                 Exception ex = (Exception) msg.getData().getSerializable(GetStoryTask.EXCEPTION_KEY);
-                getStoryObserver.getStoryFail("Failed to get story because of exception: " + ex.getMessage());
+                getStoryObserver.handleFailure("Failed to get story because of exception: " + ex.getMessage());
             }
         }
     }
 
-    public interface GetFeedObserver {
+    public interface GetFeedObserver extends ServiceObserver {
         void getFeedSuccess(List<Status> statuses, boolean hasMorePages);
-        void getFeedFailed(String message);
+//        void handleFailure(String message);
     }
 
     public void getFeed(AuthToken authToken, User user, int PAGE_SIZE, Status lastStatus,
@@ -133,10 +134,10 @@ public class StatusService {
                 getFeedObserver.getFeedSuccess(statuses, hasMorePages);
             } else if (msg.getData().containsKey(GetFeedTask.MESSAGE_KEY)) {
                 String message = msg.getData().getString(GetFeedTask.MESSAGE_KEY);
-                getFeedObserver.getFeedFailed("Failed to get feed: " + message);
+                getFeedObserver.handleFailure("Failed to get feed: " + message);
             } else if (msg.getData().containsKey(GetFeedTask.EXCEPTION_KEY)) {
                 Exception ex = (Exception) msg.getData().getSerializable(GetFeedTask.EXCEPTION_KEY);
-                getFeedObserver.getFeedFailed("Failed to get feed because of exception: " + ex.getMessage());
+                getFeedObserver.handleFailure("Failed to get feed because of exception: " + ex.getMessage());
             }
         }
     }

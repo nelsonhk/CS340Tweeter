@@ -48,7 +48,7 @@ public class MainPresenter {
         }
 
         @Override
-        public void getFollowingCountFailed(String message) {
+        public void handleFailure(String message) {
             mainView.displayErrorMessage(message);
         }
     }
@@ -66,7 +66,7 @@ public class MainPresenter {
         }
 
         @Override
-        public void getFollowerCountFailed(String message) {
+        public void handleFailure(String message) {
             mainView.displayErrorMessage(message);
         }
     }
@@ -93,7 +93,7 @@ public class MainPresenter {
         }
 
         @Override
-        public void postStatusFailed(String message) {
+        public void handleFailure(String message) {
             mainView.displayErrorMessage(message);
         }
     }
@@ -112,7 +112,7 @@ public class MainPresenter {
         }
 
         @Override
-        public void followFailed(String message) {
+        public void handleFailure(String message) {
             mainView.displayErrorMessage(message);
         }
     }
@@ -131,7 +131,7 @@ public class MainPresenter {
         }
 
         @Override
-        public void logoutFailed(String message) {
+        public void handleFailure(String message) {
             mainView.displayErrorMessage(message);
         }
     }
@@ -154,7 +154,7 @@ public class MainPresenter {
         }
 
         @Override
-        public void unfollowFailed(String message) {
+        public void handleFailure(String message) {
             mainView.displayErrorMessage(message);
         }
     }
@@ -176,7 +176,7 @@ public class MainPresenter {
         }
 
         @Override
-        public void getIsFollowingFailed(String message) {
+        public void handleFailure(String message) {
             mainView.displayErrorMessage(message);
         }
     }

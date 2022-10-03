@@ -56,7 +56,7 @@ public class LoginPresenter implements UserService.LoginObserver {
     }
 
     @Override
-    public void loginFailed(String message) {
+    public void handleFailure(String message) {
         loginView.clearInfoMessage();
         loginView.clearErrorMessage();
 

@@ -55,7 +55,7 @@ public class FeedPresenter {
         }
 
         @Override
-        public void getFeedFailed(String message) {
+        public void handleFailure(String message) {
             setLoading(false);
             feedView.setLoadingFooter(false);
 
@@ -79,7 +79,7 @@ public class FeedPresenter {
         }
 
         @Override
-        public void getUserFailed(String message) {
+        public void handleFailure(String message) {
             feedView.displayErrorMessage(message);
         }
     }

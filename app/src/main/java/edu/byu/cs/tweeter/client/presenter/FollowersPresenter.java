@@ -58,7 +58,7 @@ public class FollowersPresenter {
         }
 
         @Override
-        public void getFollowersFailed(String message) {
+        public void handleFailure(String message) {
             setLoading(false);
             followersView.setLoadingFooter(false);
 
@@ -78,7 +78,7 @@ public class FollowersPresenter {
         }
 
         @Override
-        public void getUserFailed(String message) {
+        public void handleFailure(String message) {
             followersView.displayErrorMessage(message);
         }
     }

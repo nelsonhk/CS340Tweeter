@@ -91,7 +91,7 @@ public class FollowingPresenter {
         }
 
         @Override
-        public void getUserFailed(String message) {
+        public void handleFailure(String message) {
             view.displayErrorMessage(message);
         }
     }
@@ -121,7 +121,7 @@ public class FollowingPresenter {
          * @param message error message.
          */
         @Override
-        public void getFollowingFailed(String message) {
+        public void handleFailure(String message) {
             setLoading(false);
             view.setLoadingFooter(false);
 
