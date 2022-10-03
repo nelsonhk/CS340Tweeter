@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import edu.byu.cs.tweeter.client.backgroundTask.GetFeedTask;
-import edu.byu.cs.tweeter.client.backgroundTask.GetStoryTask;
-import edu.byu.cs.tweeter.client.backgroundTask.PostStatusTask;
 import edu.byu.cs.tweeter.client.cache.Cache;
+import edu.byu.cs.tweeter.client.model.service.backgroundTaskRefactored.GetFeedTask;
+import edu.byu.cs.tweeter.client.model.service.backgroundTaskRefactored.GetStoryTask;
+import edu.byu.cs.tweeter.client.model.service.backgroundTaskRefactored.PostStatusTask;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.client.view.main.feed.FeedFragment;
 import edu.byu.cs.tweeter.client.view.main.story.StoryFragment;
@@ -91,7 +91,7 @@ public class StatusService {
         public void handleMessage(@NonNull Message msg) {
             boolean success = msg.getData().getBoolean(GetStoryTask.SUCCESS_KEY);
             if (success) {
-                List<Status> statuses = (List<Status>) msg.getData().getSerializable(GetStoryTask.STATUSES_KEY);
+                List<Status> statuses = (List<Status>) msg.getData().getSerializable(GetStoryTask.ITEMS_KEY);
                 boolean hasMorePages = msg.getData().getBoolean(GetStoryTask.MORE_PAGES_KEY);
                 getStoryObserver.getStorySuccess(statuses, hasMorePages);
             } else if (msg.getData().containsKey(GetStoryTask.MESSAGE_KEY)) {
@@ -132,7 +132,7 @@ public class StatusService {
         public void handleMessage(@NonNull Message msg) {
             boolean success = msg.getData().getBoolean(GetFeedTask.SUCCESS_KEY);
             if (success) {
-                List<Status> statuses = (List<Status>) msg.getData().getSerializable(GetFeedTask.STATUSES_KEY);
+                List<Status> statuses = (List<Status>) msg.getData().getSerializable(GetFeedTask.ITEMS_KEY);
                 boolean hasMorePages = msg.getData().getBoolean(GetFeedTask.MORE_PAGES_KEY);
                 getFeedObserver.getFeedSuccess(statuses, hasMorePages);
             } else if (msg.getData().containsKey(GetFeedTask.MESSAGE_KEY)) {
