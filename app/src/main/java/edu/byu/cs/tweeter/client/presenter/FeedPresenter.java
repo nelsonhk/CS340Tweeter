@@ -44,15 +44,26 @@ public class FeedPresenter {
     private class GetFeedObserver implements StatusService.GetFeedObserver {
 
         @Override
-        public void getFeedSuccess(List<Status> statuses, boolean hasMorePages) {
+        public void getItemsSuccess(List items, boolean hasMorePages) {
             setLoading(false);
             feedView.setLoadingFooter(false);
 
-            setLastStatus((statuses.size() > 0) ? statuses.get(statuses.size() - 1) : null);
+            setLastStatus((items.size() > 0) ? (Status) items.get(items.size() - 1) : null);
             setHasMorePages(hasMorePages);
 
-            feedView.addItems(statuses);
+            feedView.addItems(items);
         }
+
+//        @Override
+//        public void getFeedSuccess(List<Status> statuses, boolean hasMorePages) {
+//            setLoading(false);
+//            feedView.setLoadingFooter(false);
+//
+//            setLastStatus((statuses.size() > 0) ? statuses.get(statuses.size() - 1) : null);
+//            setHasMorePages(hasMorePages);
+//
+//            feedView.addItems(statuses);
+//        }
 
         @Override
         public void handleFailure(String message) {
@@ -63,6 +74,8 @@ public class FeedPresenter {
 
             feedView.displayErrorMessage(message);
         }
+
+
     }
 
 

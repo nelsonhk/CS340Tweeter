@@ -40,10 +40,12 @@ public class StatusService extends ServiceTemplate {
         }
     }
 
-    public interface GetStoryObserver extends ServiceTemplate.ServiceObserver {
-        void getStorySuccess(List<Status> statuses, boolean hasMorePages);
-//        void handleFailure(String message);
-    }
+    public interface GetStoryObserver extends PagedServiceObserver {}
+
+//    public interface GetStoryObserver extends ServiceTemplate.ServiceObserver {
+////        void getStorySuccess(List<Status> statuses, boolean hasMorePages);
+////        void handleFailure(String message);
+//    }
 
     public void getStory(User user, int PAGE_SIZE, Status lastStatus,
                          GetStoryObserver getStoryObserver) {
@@ -65,14 +67,16 @@ public class StatusService extends ServiceTemplate {
         protected void handleSuccessMessage(GetStoryObserver observer, Bundle data) {
             List<Status> statuses = (List<Status>) data.getSerializable(GetStoryTask.ITEMS_KEY);
             boolean hasMorePages = data.getBoolean(GetStoryTask.MORE_PAGES_KEY);
-            observer.getStorySuccess(statuses, hasMorePages);
+            observer.getItemsSuccess(statuses, hasMorePages);
         }
     }
 
-    public interface GetFeedObserver extends ServiceTemplate.ServiceObserver {
-        void getFeedSuccess(List<Status> statuses, boolean hasMorePages);
-//        void handleFailure(String message);
-    }
+    public interface GetFeedObserver extends PagedServiceObserver {}
+
+//    public interface GetFeedObserver extends ServiceTemplate.ServiceObserver {
+////        void getFeedSuccess(List<Status> statuses, boolean hasMorePages);
+//////        void handleFailure(String message);
+////    }
 
     public void getFeed(AuthToken authToken, User user, int PAGE_SIZE, Status lastStatus,
                         GetFeedObserver getFeedObserver) {
@@ -94,7 +98,7 @@ public class StatusService extends ServiceTemplate {
         protected void handleSuccessMessage(GetFeedObserver observer, Bundle data) {
             List<Status> statuses = (List<Status>) data.getSerializable(GetFeedTask.ITEMS_KEY);
             boolean hasMorePages = data.getBoolean(GetFeedTask.MORE_PAGES_KEY);
-            observer.getFeedSuccess(statuses, hasMorePages);
+            observer.getItemsSuccess(statuses, hasMorePages);
         }
     }
 

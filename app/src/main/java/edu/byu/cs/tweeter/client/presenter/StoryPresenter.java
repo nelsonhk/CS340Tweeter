@@ -41,15 +41,26 @@ public class StoryPresenter {
     private class GetStoryObserver implements StatusService.GetStoryObserver {
 
         @Override
-        public void getStorySuccess(List<Status> statuses, boolean hasMorePages) {
+        public void getItemsSuccess(List items, boolean hasMorePages) {
             setLoading(false);
             view.setLoadingFooter(false);
 
-            setLastStatus((statuses.size() > 0) ? statuses.get(statuses.size() - 1) : null);
+            setLastStatus((items.size() > 0) ? (Status) items.get(items.size() - 1) : null);
             setHasMorePages(hasMorePages);
 
-            view.addItems(statuses);
+            view.addItems(items);
         }
+
+//        @Override
+//        public void getStorySuccess(List<Status> statuses, boolean hasMorePages) {
+//            setLoading(false);
+//            view.setLoadingFooter(false);
+//
+//            setLastStatus((statuses.size() > 0) ? statuses.get(statuses.size() - 1) : null);
+//            setHasMorePages(hasMorePages);
+//
+//            view.addItems(statuses);
+//        }
 
         @Override
         public void handleFailure(String message) {
@@ -61,6 +72,7 @@ public class StoryPresenter {
 
             view.displayErrorMessage(errorMessage);
         }
+
     }
 
     public void getUser(String username) {

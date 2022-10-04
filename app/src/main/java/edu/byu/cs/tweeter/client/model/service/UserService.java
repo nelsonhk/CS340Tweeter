@@ -81,9 +81,7 @@ public class UserService extends ServiceTemplate {
             User loggedInUser = (User) data.getSerializable(LoginTask.USER_KEY);
             AuthToken authToken = (AuthToken) data.getSerializable(LoginTask.AUTH_TOKEN_KEY);
 
-            // Cache user session information
-            Cache.getInstance().setCurrUser(loggedInUser);
-            Cache.getInstance().setCurrUserAuthToken(authToken);
+            cacheUserSession(loggedInUser, authToken);
 
             observer.loginSucceeded(loggedInUser, authToken);
         }
@@ -101,8 +99,7 @@ public class UserService extends ServiceTemplate {
             User registeredUser = (User) data.getSerializable(RegisterTask.USER_KEY);
             AuthToken authToken = (AuthToken) data.getSerializable(RegisterTask.AUTH_TOKEN_KEY);
 
-            Cache.getInstance().setCurrUser(registeredUser);
-            Cache.getInstance().setCurrUserAuthToken(authToken);
+            cacheUserSession(registeredUser, authToken);
 
             observer.registerSucceeded(registeredUser, authToken);
         }
@@ -122,6 +119,11 @@ public class UserService extends ServiceTemplate {
             User user = (User) data.getSerializable(GetUserTask.USER_KEY);
             observer.getUserSucceeded(user);
         }
+    }
+
+    private void cacheUserSession(User user, AuthToken authToken) {
+        Cache.getInstance().setCurrUser(user);
+        Cache.getInstance().setCurrUserAuthToken(authToken);
     }
 
 }
