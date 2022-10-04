@@ -7,10 +7,10 @@ import android.os.Message;
 
 import androidx.annotation.NonNull;
 
-import edu.byu.cs.tweeter.client.model.service.backgroundTaskRefactored.BackgroundTask;
-import edu.byu.cs.tweeter.client.model.service.observer.ServiceObserver;
+import edu.byu.cs.tweeter.client.model.service.ServiceTemplate;
+import edu.byu.cs.tweeter.client.model.service.backgroundTask.BackgroundTask;
 
-public abstract class BackgroundTaskHandler<T extends ServiceObserver> extends Handler {
+public abstract class BackgroundTaskHandler<T extends ServiceTemplate.ServiceObserver> extends Handler {
 
     private final T observer;
 
