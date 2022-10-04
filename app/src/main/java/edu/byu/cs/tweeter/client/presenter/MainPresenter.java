@@ -105,10 +105,10 @@ public class MainPresenter {
     private class FollowObserver implements FollowService.FollowObserver {
 
         @Override
-        public void followSuccess(String selectedUserName) {
+        public void followSuccess() {
             mainView.updateFollowingAndFollowersCounts();
             mainView.updateFollowButton(false);
-            mainView.displayInfoToast("Adding " + selectedUserName + "...");
+            mainView.displayInfoToast("Adding ");
         }
 
         @Override
@@ -147,10 +147,10 @@ public class MainPresenter {
     private class UnfollowObserver implements FollowService.UnfollowObserver {
 
         @Override
-        public void unfollowSuccess(String selectedUserName) {
+        public void unfollowSuccess() {
             mainView.updateFollowingAndFollowersCounts();
             mainView.updateFollowButton(true);
-            mainView.displayInfoToast("Removing " + selectedUserName + "...");
+            mainView.displayInfoToast("Removing ");
         }
 
         @Override

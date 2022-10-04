@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements StatusDialogFragm
 
     @Override
     public void displayInfoToast(String message) {
+        if (message.contains("Removing") || message.contains("Adding")) {
+            message += (selectedUser.getName() + "...");
+        }
         infoToast = Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG);
         infoToast.show();
     }
