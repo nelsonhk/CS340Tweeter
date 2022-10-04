@@ -1,4 +1,4 @@
-package edu.byu.cs.tweeter.client.model.service.backgroundTaskRefactored;
+package edu.byu.cs.tweeter.client.model.service.backgroundTask;
 
 import android.os.Handler;
 
@@ -10,12 +10,12 @@ import edu.byu.cs.tweeter.model.domain.User;
 import edu.byu.cs.tweeter.util.Pair;
 
 /**
- * Background task that retrieves a page of statuses from a user's story.
+ * Background task that retrieves a page of statuses from a user's feed.
  */
-public class GetStoryTask extends PagedStatusTask {
+public class GetFeedTask extends PagedStatusTask {
 
-    public GetStoryTask(AuthToken authToken, User targetUser, int limit, Status lastStatus,
-                        Handler messageHandler) {
+    public GetFeedTask(AuthToken authToken, User targetUser, int limit, Status lastStatus,
+                       Handler messageHandler) {
         super(authToken, targetUser, limit, lastStatus, messageHandler);
     }
 

@@ -1,24 +1,23 @@
-package edu.byu.cs.tweeter.client.model.service.backgroundTaskRefactored;
+package edu.byu.cs.tweeter.client.model.service.backgroundTask;
 
 import android.os.Handler;
 
 import edu.byu.cs.tweeter.model.domain.AuthToken;
-import edu.byu.cs.tweeter.model.domain.Status;
+import edu.byu.cs.tweeter.model.domain.User;
 
 /**
- * Background task that posts a new status sent by a user.
+ * Background task that removes a following relationship between two users.
  */
-public class PostStatusTask extends AuthenticatedTask {
+public class UnfollowTask extends AuthenticatedTask {
 
     /**
-     * The new status being sent. Contains all properties of the status,
-     * including the identity of the user sending the status.
+     * The user that is being followed.
      */
-    private final Status status;
+    private final User followee;
 
-    public PostStatusTask(AuthToken authToken, Status status, Handler messageHandler) {
+    public UnfollowTask(AuthToken authToken, User followee, Handler messageHandler) {
         super(authToken, messageHandler);
-        this.status = status;
+        this.followee = followee;
     }
 
     @Override
@@ -31,5 +30,6 @@ public class PostStatusTask extends AuthenticatedTask {
         // or call sendFailedMessage if not successful
         // sendFailedMessage()
     }
+
 
 }
