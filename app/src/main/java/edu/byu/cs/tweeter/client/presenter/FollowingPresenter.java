@@ -97,22 +97,33 @@ public class FollowingPresenter {
     }
 
     private class GetFollowingObserver implements FollowService.GetFollowingObserver {
-        /**
-         * Adds new following retrieved asynchronously from the service to the view.
-         *
-         * @param following    the retrieved following.
-         * @param hasMorePages whether or not there are more following to be retrieved.
-         */
         @Override
-        public void getFollowingSuccess(List<User> following, boolean hasMorePages) {
+        public void getItemsSuccess(List items, boolean hasMorePages) {
             setLoading(false);
             view.setLoadingFooter(false);
 
-            setLastFollowee((following.size() > 0) ? following.get(following.size() - 1) : null);
+            setLastFollowee((items.size() > 0) ? (User) items.get(items.size() - 1) : null);
             setHasMorePages(hasMorePages);
 
-            view.addItems(following);
+            view.addItems(items);
         }
+
+//        /**
+//         * Adds new following retrieved asynchronously from the service to the view.
+//         *
+//         * @param following    the retrieved following.
+//         * @param hasMorePages whether or not there are more following to be retrieved.
+//         */
+//        @Override
+//        public void getFollowingSuccess(List<User> following, boolean hasMorePages) {
+//            setLoading(false);
+//            view.setLoadingFooter(false);
+//
+//            setLastFollowee((following.size() > 0) ? following.get(following.size() - 1) : null);
+//            setHasMorePages(hasMorePages);
+//
+//            view.addItems(following);
+//        }
 
         /**
          * Notifies the presenter when asynchronous retrieval of followees failed or when an exception
@@ -130,6 +141,7 @@ public class FollowingPresenter {
 
             view.displayErrorMessage(errorMessage);
         }
+
     }
 
     /**

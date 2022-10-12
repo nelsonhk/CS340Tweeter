@@ -47,15 +47,26 @@ public class FollowersPresenter {
     private class GetFollowersObserver implements FollowService.GetFollowersObserver {
 
         @Override
-        public void getFollowersSuccess(List<User> followers, boolean hasMorePages) {
+        public void getItemsSuccess(List items, boolean hasMorePages) {
             setLoading(false);
             followersView.setLoadingFooter(false);
 
-            setLastFollower((followers.size() > 0) ? followers.get(followers.size() - 1) : null);
+            setLastFollower((items.size() > 0) ? (User) items.get(items.size() - 1) : null);
             setHasMorePages(hasMorePages);
 
-            followersView.addItems(followers);
+            followersView.addItems(items);
         }
+
+//        @Override
+//        public void getFollowersSuccess(List<User> followers, boolean hasMorePages) {
+//            setLoading(false);
+//            followersView.setLoadingFooter(false);
+//
+//            setLastFollower((followers.size() > 0) ? followers.get(followers.size() - 1) : null);
+//            setHasMorePages(hasMorePages);
+//
+//            followersView.addItems(followers);
+//        }
 
         @Override
         public void handleFailure(String message) {

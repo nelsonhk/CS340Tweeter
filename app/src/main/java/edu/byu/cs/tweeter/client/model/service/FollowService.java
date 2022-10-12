@@ -14,6 +14,7 @@ import edu.byu.cs.tweeter.client.model.service.backgroundTask.GetFollowingTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.IsFollowerTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.UnfollowTask;
 import edu.byu.cs.tweeter.client.model.service.handler.BackgroundTaskHandler;
+import edu.byu.cs.tweeter.client.model.service.handler.PagedBackgroundTaskHandler;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
@@ -136,9 +137,11 @@ public class FollowService extends ServiceTemplate {
         }
     }
 
-    public interface GetFollowingObserver extends ServiceTemplate.ServiceObserver {
-        void getFollowingSuccess(List<User> following, boolean hasMorePages);
-    }
+    public interface GetFollowingObserver extends PagedServiceObserver {}
+
+//    public interface GetFollowingObserver extends ServiceTemplate.ServiceObserver {
+//        void getFollowingSuccess(List<User> following, boolean hasMorePages);
+//    }
 
     public void loadMoreFollowing(AuthToken authToken, User user, int PAGE_SIZE, User lastFollowing,
                                   GetFollowingObserver getFollowingObserver) {
@@ -150,23 +153,32 @@ public class FollowService extends ServiceTemplate {
     /**
      * Message handler (i.e., observer) for GetFollowingTask.
      */
-    private class GetFollowingHandler extends BackgroundTaskHandler<GetFollowingObserver> {
+    private class GetFollowingHandler extends PagedBackgroundTaskHandler<GetFollowingObserver> {
 
         public GetFollowingHandler(GetFollowingObserver getFollowingObserver) {
             super(getFollowingObserver);
         }
 
         @Override
-        protected void handleSuccessMessage(GetFollowingObserver observer, Bundle data) {
-            List<User> following = (List<User>) data.getSerializable(GetFollowingTask.ITEMS_KEY);
-            boolean hasMorePages = data.getBoolean(GetFollowingTask.MORE_PAGES_KEY);
-            observer.getFollowingSuccess(following, hasMorePages);
+        public void callObserver(List items, boolean hasMorePages) {
+            observer.getItemsSuccess(items, hasMorePages);
         }
+
+
+//        @Override
+//        protected void handleSuccessMessage(GetFollowingObserver observer, Bundle data) {
+//            List<User> following = (List<User>) data.getSerializable(GetFollowingTask.ITEMS_KEY);
+//            boolean hasMorePages = data.getBoolean(GetFollowingTask.MORE_PAGES_KEY);
+//            observer.getItemsSuccess(following, hasMorePages);
+////            observer.getFollowingSuccess(following, hasMorePages);
+//        }
     }
 
-    public interface GetFollowersObserver extends ServiceTemplate.ServiceObserver {
-        void getFollowersSuccess(List<User> followers, boolean hasMorePages);
-    }
+    public interface GetFollowersObserver extends PagedServiceObserver {}
+
+//    public interface GetFollowersObserver extends ServiceTemplate.ServiceObserver {
+//        void getFollowersSuccess(List<User> followers, boolean hasMorePages);
+//    }
 
     public void loadMoreFollowers(AuthToken authToken, User user, int PAGE_SIZE, User lastFollower,
                                   GetFollowersObserver getFollowersObserver) {
@@ -178,17 +190,23 @@ public class FollowService extends ServiceTemplate {
     /**
      * Message handler (i.e., observer) for GetFollowersTask.
      */
-    private class GetFollowersHandler extends BackgroundTaskHandler<GetFollowersObserver> {
+    private class GetFollowersHandler extends PagedBackgroundTaskHandler<GetFollowersObserver> {
 
         GetFollowersHandler(GetFollowersObserver getFollowersObserver) {
             super(getFollowersObserver);
         }
 
+//        @Override
+//        protected void handleSuccessMessage(GetFollowersObserver observer, Bundle data) {
+//            List<User> followers = (List<User>) data.getSerializable(GetFollowersTask.ITEMS_KEY);
+//            boolean hasMorePages = data.getBoolean(GetFollowersTask.MORE_PAGES_KEY);
+//            observer.getItemsSuccess(followers, hasMorePages);
+////            observer.getFollowersSuccess(followers, hasMorePages);
+//        }
+
         @Override
-        protected void handleSuccessMessage(GetFollowersObserver observer, Bundle data) {
-            List<User> followers = (List<User>) data.getSerializable(GetFollowersTask.ITEMS_KEY);
-            boolean hasMorePages = data.getBoolean(GetFollowersTask.MORE_PAGES_KEY);
-            observer.getFollowersSuccess(followers, hasMorePages);
+        public void callObserver(List items, boolean hasMorePages) {
+            observer.getItemsSuccess(items, hasMorePages);
         }
     }
 

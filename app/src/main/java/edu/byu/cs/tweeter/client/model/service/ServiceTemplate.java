@@ -25,22 +25,3 @@ public abstract class ServiceTemplate {
     }
 
 }
-
-
-//public abstract class ServiceTemplate <T extends BackgroundTask, S extends ServiceObserver> {
-//
-//    T backgroundTask;
-//
-//    public ServiceTemplate() {
-//        this.backgroundTask = backgroundTask;
-//    }
-//
-//    public void execute(ServiceObserver observer) {
-//        backgroundTask = getBackgroundTask(observer);
-//        ExecutorService executor = Executors.newSingleThreadExecutor();
-//        executor.execute(backgroundTask);
-//    }
-//
-//    public abstract T getBackgroundTask(ServiceObserver observer);
-//
-//}
