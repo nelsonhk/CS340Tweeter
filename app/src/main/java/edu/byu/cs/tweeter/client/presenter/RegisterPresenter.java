@@ -17,16 +17,12 @@ public class RegisterPresenter extends Presenter implements UserService.Register
         void displayInfoMessage(String message);
         void clearInfoMessage();
 
-//        void displayErrorMessage(String message);
         void clearErrorMessage();
         void navigateToUser(User user);
     }
 
-//    private final RegisterView view;
-
     public RegisterPresenter(RegisterView registerView) {
         super(registerView);
-//        this.registerView = registerView;
     }
 
     public void initiateRegister(String firstName, String lastName, String username,

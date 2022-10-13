@@ -9,8 +9,6 @@ import edu.byu.cs.tweeter.model.domain.User;
 
 public abstract class PagedPresenter<T> extends Presenter {
 
-//    public abstract void getItems();
-//    public abstract String getDescription();
     public abstract void createService();
 
     protected User user;

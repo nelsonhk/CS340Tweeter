@@ -42,8 +42,6 @@ public class StatusService extends ServiceTemplate {
         }
     }
 
-//    public interface GetStoryObserver extends PagedServiceObserver {}
-
     public void getStory(User user, int PAGE_SIZE, Status lastStatus,
                          PagedPresenterObserver getStoryObserver) {
         GetStoryTask getStoryTask = new GetStoryTask(Cache.getInstance().getCurrUserAuthToken(),
@@ -65,9 +63,6 @@ public class StatusService extends ServiceTemplate {
             observer.getItemsSuccess(items, hasMorePages);
         }
     }
-
-
-//    public interface GetFeedObserver extends PagedServiceObserver {}
 
     public void getFeed(AuthToken authToken, User user, int PAGE_SIZE, Status lastStatus,
                         PagedPresenterObserver getFeedObserver) {

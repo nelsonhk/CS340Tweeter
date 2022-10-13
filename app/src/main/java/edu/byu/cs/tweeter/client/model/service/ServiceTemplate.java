@@ -12,7 +12,6 @@ public abstract class ServiceTemplate {
 
     public static interface ServiceObserver {
         void handleFailure(String message);
-    //    void handleException(Exception exception);
     }
 
     public static interface PagedServiceObserver extends ServiceObserver {

@@ -9,16 +9,12 @@ public class LoginPresenter extends Presenter implements UserService.LoginObserv
     public interface LoginView extends Presenter.View {
         void displayInfoMessage(String message);
         void clearInfoMessage();
-//        void displayErrorMessage(String message);
         void clearErrorMessage();
         void navigateToUser(User user);
     }
 
-//    private final LoginView view;
-
     public LoginPresenter(LoginView loginView) {
         super(loginView);
-//        this.loginView = loginView;
     }
 
     public void initiateLogin(String username, String password) {

@@ -17,18 +17,13 @@ import edu.byu.cs.tweeter.model.domain.User;
 
 public class MainPresenter extends Presenter {
 
-//    private final MainView view;
-
     public MainPresenter(MainView mainView) {
         super(mainView);
-//        this.mainView = mainView;
     }
 
     public interface MainView extends Presenter.View {
         void displayInfoToast(String message);
         void removeInfoToast();
-//        void displayErrorMessage(String message);
-
         void logout();
         void displayFollowButton(boolean isFollower);
         void updateFollowButton(boolean removed);
@@ -80,7 +75,6 @@ public class MainPresenter extends Presenter {
             Status newStatus = new Status(post, Cache.getInstance().getCurrUser(), getFormattedDateTime(), parseURLs(post), parseMentions(post));
             new StatusService().postStatus(newStatus, new PostStatusObserver());
         } catch (Exception ex) {
-//            Log.e(LOG_TAG, ex.getMessage(), ex);
             view.displayErrorMessage("Failed to post the status because of exception: " + ex.getMessage());
         }
     }
