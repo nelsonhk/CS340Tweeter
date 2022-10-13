@@ -2,15 +2,22 @@ package edu.byu.cs.tweeter.client.presenter;
 
 import java.util.List;
 
+import edu.byu.cs.tweeter.client.model.service.ServiceTemplate;
 import edu.byu.cs.tweeter.client.model.service.UserService;
+import edu.byu.cs.tweeter.model.domain.Status;
 import edu.byu.cs.tweeter.model.domain.User;
 
 public abstract class PagedPresenter<T> extends Presenter {
 
-    private static final int PAGE_SIZE = 10;
-    private T lastItem;
-    private boolean hasMorePages;
-    private boolean isLoading = false;
+//    public abstract void getItems();
+//    public abstract String getDescription();
+    public abstract void createService();
+
+    protected User user;
+    protected static final int PAGE_SIZE = 10;
+    protected T lastItem;
+    protected boolean hasMorePages;
+    protected boolean isLoading = false;
 
     public PagedPresenter(View view) {
         super(view);
@@ -23,8 +30,10 @@ public abstract class PagedPresenter<T> extends Presenter {
         public abstract void displayInfoMessage();
     }
 
-    public void loadMoreItems() {
-        //TODO: write method body
+    public void loadMoreItems(User user) {
+        setLoading(true);
+        ((PagedView) view).setLoadingFooter(true);
+        createService();
     };
 
     public void getUser(String username) {
@@ -45,8 +54,46 @@ public abstract class PagedPresenter<T> extends Presenter {
         }
     }
 
+    public class PagedPresenterObserver implements ServiceTemplate.PagedServiceObserver {
 
-    public abstract void getItems();
-    public abstract String getDescription();
+        @Override
+        public void handleFailure(String message) {
+            setLoading(false);
+            ((PagedView) view).setLoadingFooter(false);
+            String errorMessage = message;
+            view.displayErrorMessage(errorMessage);
+        }
+
+        @Override
+        public void getItemsSuccess(List items, boolean hasMorePages) {
+            setLoading(false);
+            ((PagedView) view).setLoadingFooter(false);
+
+            setLastItem((items.size() > 0) ? (T) items.get(items.size() - 1) : null);
+            setHasMorePages(hasMorePages);
+
+            ((PagedView) view).addItems(items);
+        }
+    }
+
+    public void setLastItem(T lastItem) {
+        this.lastItem = lastItem;
+    }
+
+    public boolean isHasMorePages() {
+        return hasMorePages;
+    }
+
+    public void setHasMorePages(boolean hasMorePages) {
+        this.hasMorePages = hasMorePages;
+    }
+
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+    }
 
 }

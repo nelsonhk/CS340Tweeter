@@ -322,7 +322,7 @@ public class StoryFragment extends Fragment implements StoryPresenter.StoryView 
          */
         void loadMoreItems() {
             if (!storyPresenter.isLoading()) {   // This guard is important for avoiding a race condition in the scrolling code.
-                storyPresenter.getStory(user);
+                storyPresenter.loadMoreItems(user);
             }
         }
 

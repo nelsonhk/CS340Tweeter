@@ -273,7 +273,7 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Fo
          */
         void loadMoreItems() {
             if (!followersPresenter.isLoading()) {   // This guard is important for avoiding a race condition in the scrolling code.
-                followersPresenter.loadMoreFollowers(user);
+                followersPresenter.loadMoreItems(user);
             }
         }
 

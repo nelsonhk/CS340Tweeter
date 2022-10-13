@@ -318,7 +318,7 @@ public class FeedFragment extends Fragment implements FeedPresenter.FeedView {
          */
         void loadMoreItems(){
             if (!feedPresenter.isLoading()) {   // This guard is important for avoiding a race condition in the scrolling code.
-                feedPresenter.getFeed(user);
+                feedPresenter.loadMoreItems(user);
             }
         }
 

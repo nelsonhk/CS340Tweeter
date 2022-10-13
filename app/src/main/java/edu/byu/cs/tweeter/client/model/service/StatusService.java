@@ -10,6 +10,7 @@ import edu.byu.cs.tweeter.client.model.service.backgroundTask.GetStoryTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.PostStatusTask;
 import edu.byu.cs.tweeter.client.model.service.handler.BackgroundTaskHandler;
 import edu.byu.cs.tweeter.client.model.service.handler.PagedBackgroundTaskHandler;
+import edu.byu.cs.tweeter.client.presenter.PagedPresenter.PagedPresenterObserver;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.Status;
 import edu.byu.cs.tweeter.model.domain.User;
@@ -41,10 +42,10 @@ public class StatusService extends ServiceTemplate {
         }
     }
 
-    public interface GetStoryObserver extends PagedServiceObserver {}
+//    public interface GetStoryObserver extends PagedServiceObserver {}
 
     public void getStory(User user, int PAGE_SIZE, Status lastStatus,
-                         GetStoryObserver getStoryObserver) {
+                         PagedPresenterObserver getStoryObserver) {
         GetStoryTask getStoryTask = new GetStoryTask(Cache.getInstance().getCurrUserAuthToken(),
                 user, PAGE_SIZE, lastStatus, new GetStoryHandler(getStoryObserver));
         execute(getStoryTask);
@@ -53,9 +54,9 @@ public class StatusService extends ServiceTemplate {
     /**
      * Message handler (i.e., observer) for GetStoryTask.
      */
-    private class GetStoryHandler extends PagedBackgroundTaskHandler<GetStoryObserver> {
+    private class GetStoryHandler extends PagedBackgroundTaskHandler<PagedPresenterObserver> {
 
-        public GetStoryHandler(GetStoryObserver getStoryObserver) {
+        public GetStoryHandler(PagedPresenterObserver getStoryObserver) {
             super(getStoryObserver);
         }
 
@@ -66,10 +67,10 @@ public class StatusService extends ServiceTemplate {
     }
 
 
-    public interface GetFeedObserver extends PagedServiceObserver {}
+//    public interface GetFeedObserver extends PagedServiceObserver {}
 
     public void getFeed(AuthToken authToken, User user, int PAGE_SIZE, Status lastStatus,
-                        GetFeedObserver getFeedObserver) {
+                        PagedPresenterObserver getFeedObserver) {
         GetFeedTask getFeedTask = new GetFeedTask(authToken, user, PAGE_SIZE,
                 lastStatus, new GetFeedHandler(getFeedObserver));
         execute(getFeedTask);
@@ -78,9 +79,9 @@ public class StatusService extends ServiceTemplate {
     /**
      * Message handler (i.e., observer) for GetFeedTask.
      */
-    private class GetFeedHandler extends PagedBackgroundTaskHandler<GetFeedObserver> {
+    private class GetFeedHandler extends PagedBackgroundTaskHandler<PagedPresenterObserver> {
 
-        public GetFeedHandler(GetFeedObserver getFeedObserver) {
+        public GetFeedHandler(PagedPresenterObserver getFeedObserver) {
             super(getFeedObserver);
         }
 

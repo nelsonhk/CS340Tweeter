@@ -15,6 +15,7 @@ import edu.byu.cs.tweeter.client.model.service.backgroundTask.IsFollowerTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.UnfollowTask;
 import edu.byu.cs.tweeter.client.model.service.handler.BackgroundTaskHandler;
 import edu.byu.cs.tweeter.client.model.service.handler.PagedBackgroundTaskHandler;
+import edu.byu.cs.tweeter.client.presenter.PagedPresenter.PagedPresenterObserver;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
@@ -137,10 +138,10 @@ public class FollowService extends ServiceTemplate {
         }
     }
 
-    public interface GetFollowingObserver extends PagedServiceObserver {}
+//    public interface GetFollowingObserver extends PagedServiceObserver {}
 
     public void loadMoreFollowing(AuthToken authToken, User user, int PAGE_SIZE, User lastFollowing,
-                                  GetFollowingObserver getFollowingObserver) {
+                                  PagedPresenterObserver getFollowingObserver) {
         GetFollowingTask getFollowingTask = new GetFollowingTask(authToken, user, PAGE_SIZE,
                 lastFollowing, new GetFollowingHandler(getFollowingObserver));
         execute(getFollowingTask);
@@ -149,9 +150,9 @@ public class FollowService extends ServiceTemplate {
     /**
      * Message handler (i.e., observer) for GetFollowingTask.
      */
-    private class GetFollowingHandler extends PagedBackgroundTaskHandler<GetFollowingObserver> {
+    private class GetFollowingHandler extends PagedBackgroundTaskHandler<PagedPresenterObserver> {
 
-        public GetFollowingHandler(GetFollowingObserver getFollowingObserver) {
+        public GetFollowingHandler(PagedPresenterObserver getFollowingObserver) {
             super(getFollowingObserver);
         }
 
@@ -161,10 +162,10 @@ public class FollowService extends ServiceTemplate {
         }
     }
 
-    public interface GetFollowersObserver extends PagedServiceObserver {}
+//    public interface GetFollowersObserver extends PagedServiceObserver {}
 
     public void loadMoreFollowers(AuthToken authToken, User user, int PAGE_SIZE, User lastFollower,
-                                  GetFollowersObserver getFollowersObserver) {
+                                  PagedPresenterObserver getFollowersObserver) {
         GetFollowersTask getFollowersTask = new GetFollowersTask(authToken, user, PAGE_SIZE,
                 lastFollower, new GetFollowersHandler(getFollowersObserver));
         execute(getFollowersTask);
@@ -173,9 +174,9 @@ public class FollowService extends ServiceTemplate {
     /**
      * Message handler (i.e., observer) for GetFollowersTask.
      */
-    private class GetFollowersHandler extends PagedBackgroundTaskHandler<GetFollowersObserver> {
+    private class GetFollowersHandler extends PagedBackgroundTaskHandler<PagedPresenterObserver> {
 
-        GetFollowersHandler(GetFollowersObserver getFollowersObserver) {
+        GetFollowersHandler(PagedPresenterObserver getFollowersObserver) {
             super(getFollowersObserver);
         }
 

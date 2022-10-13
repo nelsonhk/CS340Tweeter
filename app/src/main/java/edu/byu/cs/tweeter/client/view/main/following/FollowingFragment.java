@@ -26,6 +26,7 @@ import java.util.List;
 
 import edu.byu.cs.client.R;
 import edu.byu.cs.tweeter.client.presenter.FollowingPresenter;
+import edu.byu.cs.tweeter.client.presenter.PagedPresenter;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.model.domain.User;
 
@@ -268,7 +269,7 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Fo
          */
         void loadMoreItems() {
             if (!followingPresenter.isLoading()) {   // This guard is important for avoiding a race condition in the scrolling code.
-                followingPresenter.loadMoreFollowing(user);
+                followingPresenter.loadMoreItems(user);
             }
         }
 
