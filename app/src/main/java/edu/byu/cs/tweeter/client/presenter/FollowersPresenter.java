@@ -22,13 +22,13 @@ public class FollowersPresenter {
         this.followersView = followersView;
     }
 
-    public interface FollowersView {
-        void addItems(List<User> newUsers);
-        void displayErrorMessage(String message);
-        void setLoadingFooter(boolean isLoading);
-
-        void startUserActivity(User user);
+    public interface FollowersView extends PagedPresenter.PagedView<User> {
         void displayInfoMessage();
+//        void addItems(List<User> newUsers);
+//        void displayErrorMessage(String message);
+//        void setLoadingFooter(boolean isLoading);
+//
+//        void startUserActivity(User user);
     }
 
     public void loadMoreFollowers(User user) {

@@ -4,33 +4,32 @@ import edu.byu.cs.tweeter.client.model.service.UserService;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
-public class LoginPresenter implements UserService.LoginObserver {
+public class LoginPresenter extends Presenter implements UserService.LoginObserver {
 
-    public interface LoginView {
+    public interface LoginView extends Presenter.View {
         void displayInfoMessage(String message);
         void clearInfoMessage();
-
-        void displayErrorMessage(String message);
+//        void displayErrorMessage(String message);
         void clearErrorMessage();
-
         void navigateToUser(User user);
     }
 
-    private final LoginView loginView;
+//    private final LoginView view;
 
     public LoginPresenter(LoginView loginView) {
-        this.loginView = loginView;
+        super(loginView);
+//        this.loginView = loginView;
     }
 
     public void initiateLogin(String username, String password) {
         String message = validateLogin(username, password);
         if (message == null) {
-            loginView.clearErrorMessage();
-            loginView.displayInfoMessage("Logging in...");
+            ((LoginView) view).clearErrorMessage();
+            ((LoginView) view).displayInfoMessage("Logging in...");
             new UserService().login(username, password, this);
         } else {
-            loginView.clearInfoMessage();
-            loginView.displayErrorMessage(message);
+            ((LoginView) view).clearInfoMessage();
+            view.displayErrorMessage(message);
         }
     }
 
@@ -49,18 +48,18 @@ public class LoginPresenter implements UserService.LoginObserver {
 
     @Override
     public void loginSucceeded(User user, AuthToken authToken) {
-        loginView.clearInfoMessage();
-        loginView.clearErrorMessage();
+        ((LoginView) view).clearInfoMessage();
+        ((LoginView) view).clearErrorMessage();
 
-        loginView.navigateToUser(user);
+        ((LoginView) view).navigateToUser(user);
     }
 
     @Override
     public void handleFailure(String message) {
-        loginView.clearInfoMessage();
-        loginView.clearErrorMessage();
+        ((LoginView) view).clearInfoMessage();
+        ((LoginView) view).clearErrorMessage();
 
-        loginView.displayErrorMessage(message);
+        view.displayErrorMessage(message);
     }
 
 }

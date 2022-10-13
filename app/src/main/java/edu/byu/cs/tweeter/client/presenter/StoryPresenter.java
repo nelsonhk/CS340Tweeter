@@ -22,13 +22,12 @@ public class StoryPresenter {
         this.view = view;
     }
 
-    public interface StoryView {
-        void addItems(List<Status> statuses);
-        void displayErrorMessage(String message);
-        void setLoadingFooter(boolean isLoading);
-
-        void startUserActivity(User user);
+    public interface StoryView extends PagedPresenter.PagedView<Status> {
         void displayInfoMessage();
+//        void addItems(List<Status> statuses);
+//        void displayErrorMessage(String message);
+//        void setLoadingFooter(boolean isLoading);
+//        void startUserActivity(User user);
     }
 
     public void getStory(User user) {

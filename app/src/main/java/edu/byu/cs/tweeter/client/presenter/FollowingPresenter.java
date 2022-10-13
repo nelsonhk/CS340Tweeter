@@ -33,13 +33,13 @@ public class FollowingPresenter {
     /**
      * The interface by which this presenter communicates with it's view.
      */
-    public interface FollowingView {
-        void setLoadingFooter(boolean isLoading);
-        void addItems(List<User> newUsers);
-        void displayErrorMessage(String message);
-
-        void startUserActivity(User user);
+    public interface FollowingView extends PagedPresenter.PagedView<User> {
         void displayInfoMessage();
+//        void setLoadingFooter(boolean isLoading);
+//        void addItems(List<User> newUsers);
+//        void displayErrorMessage(String message);
+//
+//        void startUserActivity(User user);
     }
 
     /**

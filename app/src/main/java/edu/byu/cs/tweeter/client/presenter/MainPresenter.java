@@ -15,18 +15,19 @@ import edu.byu.cs.tweeter.client.model.service.UserService;
 import edu.byu.cs.tweeter.model.domain.Status;
 import edu.byu.cs.tweeter.model.domain.User;
 
-public class MainPresenter {
+public class MainPresenter extends Presenter {
 
-    private final MainView mainView;
+//    private final MainView view;
 
     public MainPresenter(MainView mainView) {
-        this.mainView = mainView;
+        super(mainView);
+//        this.mainView = mainView;
     }
 
-    public interface MainView {
+    public interface MainView extends Presenter.View {
         void displayInfoToast(String message);
         void removeInfoToast();
-        void displayErrorMessage(String message);
+//        void displayErrorMessage(String message);
 
         void logout();
         void displayFollowButton(boolean isFollower);
@@ -44,12 +45,12 @@ public class MainPresenter {
 
         @Override
         public void getFollowingCountSuccess(int followingCount) {
-            mainView.setFollowingCount(followingCount);
+            ((MainView) view).setFollowingCount(followingCount);
         }
 
         @Override
         public void handleFailure(String message) {
-            mainView.displayErrorMessage(message);
+            view.displayErrorMessage(message);
         }
     }
 
@@ -62,25 +63,25 @@ public class MainPresenter {
 
         @Override
         public void getFollowerCountSuccess(int count) {
-            mainView.setFollowerCount(count);
+            ((MainView) view).setFollowerCount(count);
         }
 
         @Override
         public void handleFailure(String message) {
-            mainView.displayErrorMessage(message);
+            view.displayErrorMessage(message);
         }
     }
 
     public void postStatus(String post) {
 
-        mainView.displayInfoToast("Posting Status...");
+        ((MainView) view).displayInfoToast("Posting Status...");
 
         try {
             Status newStatus = new Status(post, Cache.getInstance().getCurrUser(), getFormattedDateTime(), parseURLs(post), parseMentions(post));
             new StatusService().postStatus(newStatus, new PostStatusObserver());
         } catch (Exception ex) {
 //            Log.e(LOG_TAG, ex.getMessage(), ex);
-            mainView.displayErrorMessage("Failed to post the status because of exception: " + ex.getMessage());
+            view.displayErrorMessage("Failed to post the status because of exception: " + ex.getMessage());
         }
     }
 
@@ -88,13 +89,13 @@ public class MainPresenter {
 
         @Override
         public void postStatusSuccess() {
-            mainView.removeInfoToast();
-            mainView.displayInfoToast("Successfully Posted!");
+            ((MainView) view).removeInfoToast();
+            ((MainView) view).displayInfoToast("Successfully Posted!");
         }
 
         @Override
         public void handleFailure(String message) {
-            mainView.displayErrorMessage(message);
+            view.displayErrorMessage(message);
         }
     }
 
@@ -106,14 +107,14 @@ public class MainPresenter {
 
         @Override
         public void followSuccess() {
-            mainView.updateFollowingAndFollowersCounts();
-            mainView.updateFollowButton(false);
-            mainView.displayInfoToast("Adding ");
+            ((MainView) view).updateFollowingAndFollowersCounts();
+            ((MainView) view).updateFollowButton(false);
+            ((MainView) view).displayInfoToast("Adding ");
         }
 
         @Override
         public void handleFailure(String message) {
-            mainView.displayErrorMessage(message);
+            view.displayErrorMessage(message);
         }
     }
 
@@ -125,14 +126,14 @@ public class MainPresenter {
 
         @Override
         public void logoutSuccess() {
-            mainView.displayInfoToast("Logging Out...");
-            mainView.removeInfoToast();
-            mainView.logout();
+            ((MainView) view).displayInfoToast("Logging Out...");
+            ((MainView) view).removeInfoToast();
+            ((MainView) view).logout();
         }
 
         @Override
         public void handleFailure(String message) {
-            mainView.displayErrorMessage(message);
+            view.displayErrorMessage(message);
         }
     }
 
@@ -148,14 +149,14 @@ public class MainPresenter {
 
         @Override
         public void unfollowSuccess() {
-            mainView.updateFollowingAndFollowersCounts();
-            mainView.updateFollowButton(true);
-            mainView.displayInfoToast("Removing ");
+            ((MainView) view).updateFollowingAndFollowersCounts();
+            ((MainView) view).updateFollowButton(true);
+            ((MainView) view).displayInfoToast("Removing ");
         }
 
         @Override
         public void handleFailure(String message) {
-            mainView.displayErrorMessage(message);
+            view.displayErrorMessage(message);
         }
     }
 
@@ -172,12 +173,12 @@ public class MainPresenter {
 
         @Override
         public void getIsFollowingSuccess(boolean isFollowing) {
-            mainView.displayFollowButton(isFollowing);
+            ((MainView) view).displayFollowButton(isFollowing);
         }
 
         @Override
         public void handleFailure(String message) {
-            mainView.displayErrorMessage(message);
+            view.displayErrorMessage(message);
         }
     }
 

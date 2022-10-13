@@ -12,24 +12,25 @@ import edu.byu.cs.tweeter.model.domain.User;
 
 public class FeedPresenter {
 
-    private final FeedView feedView;
     private static final int PAGE_SIZE = 10;
+    private static final String LOG_TAG = "FeedPresenter";
+
+    private final FeedView feedView;
+
     private Status lastStatus;
     private boolean hasMorePages;
     private boolean isLoading = false;
-    private static final String LOG_TAG = "FeedPresenter";
 
     public FeedPresenter(FeedView feedView) {
         this.feedView = feedView;
     }
 
-    public interface FeedView {
-        void startUserActivity(User user);
+    public interface FeedView extends PagedPresenter.PagedView<Status> {
         void displayInfoMessage();
-        void displayErrorMessage(String message);
-
-        void addItems(List<Status> statuses);
-        void setLoadingFooter(boolean isLoading);
+//        void startUserActivity(User user);
+//        void displayErrorMessage(String message);
+//        void addItems(List<Status> statuses);
+//        void setLoadingFooter(boolean isLoading);
 
     }
 
