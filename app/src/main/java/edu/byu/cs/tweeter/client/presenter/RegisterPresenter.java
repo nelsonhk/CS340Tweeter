@@ -27,34 +27,9 @@ public class RegisterPresenter extends AuthPresenter {
         return "Registering...";
     }
 
-//    public interface RegisterView extends Presenter.View {
-//        void displayInfoMessage(String message);
-//        void clearInfoMessage();
-//        void clearErrorMessage();
-//        void navigateToUser(User user);
-//    }
-
     public RegisterPresenter(AuthView registerView) {
         super(registerView);
     }
-
-//    public void initiateRegister(String firstName, String lastName, String username,
-//                                 String password, ImageView imageToUpload) {
-//        String message = validateRegistration(firstName, lastName, username,
-//                password, imageToUpload);
-//        ((AuthView) view).clearErrorMessage();
-//        if (message == null) {
-//            ((AuthView) view).displayInfoMessage("Registering...");
-//
-//            String imageBytesBase64 = convertImage(imageToUpload);
-//
-//            new UserService().register(firstName, lastName, username, password,
-//                    imageBytesBase64, this);
-//
-//        } else {
-//            ((AuthView) view).displayErrorMessage(message);
-//        }
-//    }
 
     @Override
     public String validateInputs(String firstName, String lastName, String username,
@@ -96,21 +71,5 @@ public class RegisterPresenter extends AuthPresenter {
 
         return Base64.getEncoder().encodeToString(imageBytes);
     }
-
-//    @Override
-//    public void registerSucceeded(User user, AuthToken authToken) {
-//        ((AuthView) view).clearInfoMessage();
-//        ((AuthView) view).clearErrorMessage();
-//
-//        ((AuthView) view).navigateToUser(user);
-//    }
-//
-//    @Override
-//    public void handleFailure(String message) {
-//        ((AuthView) view).clearInfoMessage();
-//        ((AuthView) view).clearErrorMessage();
-//
-//        ((AuthView) view).displayErrorMessage(message);
-//    }
 
 }

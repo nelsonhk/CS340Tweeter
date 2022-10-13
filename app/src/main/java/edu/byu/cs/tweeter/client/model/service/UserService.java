@@ -35,9 +35,6 @@ public class UserService extends ServiceTemplate {
 
     }
 
-//    public interface LoginObserver extends ServiceTemplate.ServiceObserver {
-//        void loginSucceeded(User user, AuthToken authToken);
-//    }
 
     public interface RegisterObserver extends ServiceTemplate.ServiceObserver {
         void registerSucceeded(User user, AuthToken authToken);
