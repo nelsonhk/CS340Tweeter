@@ -26,7 +26,7 @@ public class FeedPresenter {
     }
 
     public interface FeedView extends PagedPresenter.PagedView<Status> {
-        void displayInfoMessage();
+//        void displayInfoMessage();
 //        void startUserActivity(User user);
 //        void displayErrorMessage(String message);
 //        void addItems(List<Status> statuses);
@@ -79,24 +79,24 @@ public class FeedPresenter {
 
     }
 
-
-    public void getUser(String username) {
-        new UserService().getUser(username, new GetUserObserver());
-    }
-
-    private class GetUserObserver implements UserService.GetUserObserver {
-
-        @Override
-        public void getUserSucceeded(User user) {
-            feedView.startUserActivity(user);
-            feedView.displayInfoMessage();
-        }
-
-        @Override
-        public void handleFailure(String message) {
-            feedView.displayErrorMessage(message);
-        }
-    }
+//
+//    public void getUser(String username) {
+//        new UserService().getUser(username, new GetUserObserver());
+//    }
+//
+//    private class GetUserObserver implements UserService.GetUserObserver {
+//
+//        @Override
+//        public void getUserSucceeded(User user) {
+//            feedView.startUserActivity(user);
+//            feedView.displayInfoMessage();
+//        }
+//
+//        @Override
+//        public void handleFailure(String message) {
+//            feedView.displayErrorMessage(message);
+//        }
+//    }
 
 
     public void setLastStatus(Status lastStatus) {
