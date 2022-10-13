@@ -5,10 +5,7 @@ import android.os.Bundle;
 import java.util.List;
 
 import edu.byu.cs.tweeter.client.model.service.ServiceTemplate;
-import edu.byu.cs.tweeter.client.model.service.backgroundTask.BackgroundTask;
-import edu.byu.cs.tweeter.client.model.service.backgroundTask.GetStoryTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.PagedTask;
-import edu.byu.cs.tweeter.model.domain.Status;
 
 public abstract class PagedBackgroundTaskHandler<T extends ServiceTemplate.PagedServiceObserver>
         extends BackgroundTaskHandler<T> {
