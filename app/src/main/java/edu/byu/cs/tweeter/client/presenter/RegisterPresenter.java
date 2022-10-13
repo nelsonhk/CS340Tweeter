@@ -45,7 +45,6 @@ public class RegisterPresenter extends Presenter implements UserService.Register
         } else {
             ((RegisterView) view).displayErrorMessage(message);
         }
-
     }
 
     public String validateRegistration(String firstName, String lastName, String username,

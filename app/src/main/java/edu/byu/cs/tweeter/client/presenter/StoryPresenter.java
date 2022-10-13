@@ -23,7 +23,7 @@ public class StoryPresenter {
     }
 
     public interface StoryView extends PagedPresenter.PagedView<Status> {
-        void displayInfoMessage();
+//        void displayInfoMessage();
 //        void addItems(List<Status> statuses);
 //        void displayErrorMessage(String message);
 //        void setLoadingFooter(boolean isLoading);
@@ -74,23 +74,23 @@ public class StoryPresenter {
 
     }
 
-    public void getUser(String username) {
-        new UserService().getUser(username, new GetUserObserver());
-    }
-
-    private class GetUserObserver implements UserService.GetUserObserver {
-
-        @Override
-        public void getUserSucceeded(User user) {
-            view.startUserActivity(user);
-            view.displayInfoMessage();
-        }
-
-        @Override
-        public void handleFailure(String message) {
-            view.displayErrorMessage(message);
-        }
-    }
+//    public void getUser(String username) {
+//        new UserService().getUser(username, new GetUserObserver());
+//    }
+//
+//    private class GetUserObserver implements UserService.GetUserObserver {
+//
+//        @Override
+//        public void getUserSucceeded(User user) {
+//            view.startUserActivity(user);
+//            view.displayInfoMessage();
+//        }
+//
+//        @Override
+//        public void handleFailure(String message) {
+//            view.displayErrorMessage(message);
+//        }
+//    }
 
 
     public void setLastStatus(Status lastStatus) {

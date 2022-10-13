@@ -9,21 +9,22 @@ import edu.byu.cs.tweeter.client.model.service.FollowService;
 import edu.byu.cs.tweeter.client.model.service.UserService;
 import edu.byu.cs.tweeter.model.domain.User;
 
-public class FollowersPresenter {
+public class FollowersPresenter extends PagedPresenter<User> {
 
     private static final int PAGE_SIZE = 10;
     private User lastFollower;
     private boolean hasMorePages;
     private boolean isLoading = false;
     private static final String LOG_TAG = "FollowersPresenter";
-    FollowersView followersView;
+//    FollowersView followersView;
 
     public FollowersPresenter(FollowersView followersView) {
-        this.followersView = followersView;
+        super(followersView);
+//        this.followersView = followersView;
     }
 
     public interface FollowersView extends PagedPresenter.PagedView<User> {
-        void displayInfoMessage();
+//        void displayInfoMessage();
 //        void addItems(List<User> newUsers);
 //        void displayErrorMessage(String message);
 //        void setLoadingFooter(boolean isLoading);
@@ -39,9 +40,9 @@ public class FollowersPresenter {
                 user, PAGE_SIZE, lastFollower, new GetFollowersObserver());
     }
 
-    public void getUser(String username) {
-        new UserService().getUser(username, new GetUserObserver());
-    }
+//    public void getUser(String username) {
+//        new UserService().getUser(username, new GetUserObserver());
+//    }
 
 
     private class GetFollowersObserver implements FollowService.GetFollowersObserver {
@@ -80,19 +81,19 @@ public class FollowersPresenter {
         }
     }
 
-    private class GetUserObserver implements UserService.GetUserObserver {
-
-        @Override
-        public void getUserSucceeded(User user) {
-            followersView.startUserActivity(user);
-            followersView.displayInfoMessage();
-        }
-
-        @Override
-        public void handleFailure(String message) {
-            followersView.displayErrorMessage(message);
-        }
-    }
+//    private class GetUserObserver implements UserService.GetUserObserver {
+//
+//        @Override
+//        public void getUserSucceeded(User user) {
+//            followersView.startUserActivity(user);
+//            followersView.displayInfoMessage();
+//        }
+//
+//        @Override
+//        public void handleFailure(String message) {
+//            followersView.displayErrorMessage(message);
+//        }
+//    }
 
     public void setLastFollower(User lastFollower) {
         this.lastFollower = lastFollower;

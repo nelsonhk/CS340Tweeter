@@ -34,7 +34,7 @@ public class FollowingPresenter {
      * The interface by which this presenter communicates with it's view.
      */
     public interface FollowingView extends PagedPresenter.PagedView<User> {
-        void displayInfoMessage();
+//        void displayInfoMessage();
 //        void setLoadingFooter(boolean isLoading);
 //        void addItems(List<User> newUsers);
 //        void displayErrorMessage(String message);
@@ -78,23 +78,23 @@ public class FollowingPresenter {
 //        return new FollowService();
 //    }
 
-    public void getUser(String username) {
-        new UserService().getUser(username, new GetUserObserver());
-    }
-
-    private class GetUserObserver implements UserService.GetUserObserver {
-
-        @Override
-        public void getUserSucceeded(User user) {
-            view.startUserActivity(user);
-            view.displayInfoMessage();
-        }
-
-        @Override
-        public void handleFailure(String message) {
-            view.displayErrorMessage(message);
-        }
-    }
+//    public void getUser(String username) {
+//        new UserService().getUser(username, new GetUserObserver());
+//    }
+//
+//    private class GetUserObserver implements UserService.GetUserObserver {
+//
+//        @Override
+//        public void getUserSucceeded(User user) {
+//            view.startUserActivity(user);
+//            view.displayInfoMessage();
+//        }
+//
+//        @Override
+//        public void handleFailure(String message) {
+//            view.displayErrorMessage(message);
+//        }
+//    }
 
     private class GetFollowingObserver implements FollowService.GetFollowingObserver {
         @Override
