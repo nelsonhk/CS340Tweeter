@@ -35,9 +35,9 @@ public class UserService extends ServiceTemplate {
 
     }
 
-    public interface LoginObserver extends ServiceTemplate.ServiceObserver {
-        void loginSucceeded(User user, AuthToken authToken);
-    }
+//    public interface LoginObserver extends ServiceTemplate.ServiceObserver {
+//        void loginSucceeded(User user, AuthToken authToken);
+//    }
 
     public interface RegisterObserver extends ServiceTemplate.ServiceObserver {
         void registerSucceeded(User user, AuthToken authToken);
@@ -53,14 +53,14 @@ public class UserService extends ServiceTemplate {
         execute(getUserTask);
     }
 
-    public void login(String username, String password, LoginObserver loginObserver) {
+    public void login(String username, String password, AuthServiceObserver loginObserver) {
         // Send the login request.
         LoginTask loginTask = new LoginTask(username, password, new LoginHandler(loginObserver));
         execute(loginTask);
     }
 
     public void register(String firstName, String lastName, String username,
-                         String password, String imageBytesBase64, RegisterObserver registerObserver) {
+                         String password, String imageBytesBase64, AuthServiceObserver registerObserver) {
         // Send register request.
         RegisterTask registerTask = new RegisterTask(firstName, lastName,
                 username, password, imageBytesBase64, new RegisterHandler(registerObserver));
@@ -70,38 +70,38 @@ public class UserService extends ServiceTemplate {
     /**
      * Message handler (i.e., observer) for LoginTask
      */
-    private class LoginHandler extends BackgroundTaskHandler<LoginObserver> {
+    private class LoginHandler extends BackgroundTaskHandler<AuthServiceObserver> {
 
-        public LoginHandler(LoginObserver loginObserver) {
+        public LoginHandler(AuthServiceObserver loginObserver) {
             super(loginObserver);
         }
 
         @Override
-        protected void handleSuccessMessage(LoginObserver observer, Bundle data) {
+        protected void handleSuccessMessage(AuthServiceObserver observer, Bundle data) {
             User loggedInUser = (User) data.getSerializable(LoginTask.USER_KEY);
             AuthToken authToken = (AuthToken) data.getSerializable(LoginTask.AUTH_TOKEN_KEY);
 
             cacheUserSession(loggedInUser, authToken);
 
-            observer.loginSucceeded(loggedInUser, authToken);
+            observer.authSuccess(loggedInUser, authToken);
         }
     }
 
     // RegisterHandler
-    private class RegisterHandler extends BackgroundTaskHandler<RegisterObserver> {
+    private class RegisterHandler extends BackgroundTaskHandler<AuthServiceObserver> {
 
-        public RegisterHandler(RegisterObserver registerObserver) {
+        public RegisterHandler(AuthServiceObserver registerObserver) {
             super(registerObserver);
         }
 
         @Override
-        protected void handleSuccessMessage(RegisterObserver observer, Bundle data) {
+        protected void handleSuccessMessage(AuthServiceObserver observer, Bundle data) {
             User registeredUser = (User) data.getSerializable(RegisterTask.USER_KEY);
             AuthToken authToken = (AuthToken) data.getSerializable(RegisterTask.AUTH_TOKEN_KEY);
 
             cacheUserSession(registeredUser, authToken);
 
-            observer.registerSucceeded(registeredUser, authToken);
+            observer.authSuccess(registeredUser, authToken);
         }
     }
 

@@ -11,39 +11,53 @@ import edu.byu.cs.tweeter.client.model.service.UserService;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
-public class RegisterPresenter extends Presenter implements UserService.RegisterObserver {
+public class RegisterPresenter extends AuthPresenter {
 
-    public interface RegisterView extends Presenter.View {
-        void displayInfoMessage(String message);
-        void clearInfoMessage();
+    @Override
+    public void authSuccess(String firstName, String lastName, String username,
+                            String password, ImageView imageToUpload) {
+        String imageBytesBase64 = convertImage(imageToUpload);
 
-        void clearErrorMessage();
-        void navigateToUser(User user);
+        new UserService().register(firstName, lastName, username, password,
+                imageBytesBase64, this);
     }
 
-    public RegisterPresenter(RegisterView registerView) {
+    @Override
+    public String getInfoMessage() {
+        return "Registering...";
+    }
+
+//    public interface RegisterView extends Presenter.View {
+//        void displayInfoMessage(String message);
+//        void clearInfoMessage();
+//        void clearErrorMessage();
+//        void navigateToUser(User user);
+//    }
+
+    public RegisterPresenter(AuthView registerView) {
         super(registerView);
     }
 
-    public void initiateRegister(String firstName, String lastName, String username,
-                                 String password, ImageView imageToUpload) {
-        String message = validateRegistration(firstName, lastName, username,
-                password, imageToUpload);
-        ((RegisterView) view).clearErrorMessage();
-        if (message == null) {
-            ((RegisterView) view).displayInfoMessage("Registering...");
+//    public void initiateRegister(String firstName, String lastName, String username,
+//                                 String password, ImageView imageToUpload) {
+//        String message = validateRegistration(firstName, lastName, username,
+//                password, imageToUpload);
+//        ((AuthView) view).clearErrorMessage();
+//        if (message == null) {
+//            ((AuthView) view).displayInfoMessage("Registering...");
+//
+//            String imageBytesBase64 = convertImage(imageToUpload);
+//
+//            new UserService().register(firstName, lastName, username, password,
+//                    imageBytesBase64, this);
+//
+//        } else {
+//            ((AuthView) view).displayErrorMessage(message);
+//        }
+//    }
 
-            String imageBytesBase64 = convertImage(imageToUpload);
-
-            new UserService().register(firstName, lastName, username, password,
-                    imageBytesBase64, this);
-
-        } else {
-            ((RegisterView) view).displayErrorMessage(message);
-        }
-    }
-
-    public String validateRegistration(String firstName, String lastName, String username,
+    @Override
+    public String validateInputs(String firstName, String lastName, String username,
                                      String password, ImageView imageToUpload) {
         if (firstName.length() == 0) {
             return "First Name cannot be empty.";
@@ -83,20 +97,20 @@ public class RegisterPresenter extends Presenter implements UserService.Register
         return Base64.getEncoder().encodeToString(imageBytes);
     }
 
-    @Override
-    public void registerSucceeded(User user, AuthToken authToken) {
-        ((RegisterView) view).clearInfoMessage();
-        ((RegisterView) view).clearErrorMessage();
-
-        ((RegisterView) view).navigateToUser(user);
-    }
-
-    @Override
-    public void handleFailure(String message) {
-        ((RegisterView) view).clearInfoMessage();
-        ((RegisterView) view).clearErrorMessage();
-
-        ((RegisterView) view).displayErrorMessage(message);
-    }
+//    @Override
+//    public void registerSucceeded(User user, AuthToken authToken) {
+//        ((AuthView) view).clearInfoMessage();
+//        ((AuthView) view).clearErrorMessage();
+//
+//        ((AuthView) view).navigateToUser(user);
+//    }
+//
+//    @Override
+//    public void handleFailure(String message) {
+//        ((AuthView) view).clearInfoMessage();
+//        ((AuthView) view).clearErrorMessage();
+//
+//        ((AuthView) view).displayErrorMessage(message);
+//    }
 
 }

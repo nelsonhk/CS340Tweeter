@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import edu.byu.cs.client.R;
+import edu.byu.cs.tweeter.client.presenter.AuthPresenter;
 import edu.byu.cs.tweeter.client.presenter.RegisterPresenter;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.model.domain.User;
@@ -24,7 +25,7 @@ import edu.byu.cs.tweeter.model.domain.User;
 /**
  * Implements the register screen.
  */
-public class RegisterFragment extends Fragment implements RegisterPresenter.RegisterView {
+public class RegisterFragment extends Fragment implements AuthPresenter.AuthView {
     private static final String LOG_TAG = "RegisterFragment";
     private static final int RESULT_IMAGE = 10;
 
@@ -68,7 +69,6 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.Regi
         imageUploaderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: change to Presenter.View??
                 Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(gallery, RESULT_IMAGE);
             }
@@ -79,7 +79,7 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.Regi
             public void onClick(View view) {
                 // Register and move to MainActivity.
                 try {
-                    registerPresenter.initiateRegister(firstName.getText().toString(),
+                    registerPresenter.initiateAuth(firstName.getText().toString(),
                             lastName.getText().toString(), username.getText().toString(),
                             password.getText().toString(), imageToUpload);
                 } catch (Exception e) {
@@ -92,7 +92,6 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.Regi
     }
 
     // Get image if uploaded from gallery.
-    //TODO: move this to Presenter?
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 

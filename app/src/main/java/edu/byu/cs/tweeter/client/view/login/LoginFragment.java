@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import edu.byu.cs.client.R;
+import edu.byu.cs.tweeter.client.presenter.AuthPresenter;
 import edu.byu.cs.tweeter.client.presenter.LoginPresenter;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.model.domain.User;
@@ -20,7 +21,7 @@ import edu.byu.cs.tweeter.model.domain.User;
 /**
  * Implements the login screen.
  */
-public class LoginFragment extends Fragment implements LoginPresenter.LoginView {
+public class LoginFragment extends Fragment implements AuthPresenter.AuthView {
     private static final String LOG_TAG = "LoginFragment";
 
     private Toast infoToast;
@@ -56,8 +57,8 @@ public class LoginFragment extends Fragment implements LoginPresenter.LoginView 
             public void onClick(View view) {
                 // Login and move to MainActivity.
                 try {
-                    loginPresenter.initiateLogin(username.getText().toString(),
-                            password.getText().toString());
+                    loginPresenter.initiateAuth(null, null, username.getText().toString(),
+                            password.getText().toString(), null);
                 } catch (Exception e) {
                     displayErrorMessage(e.getMessage());
                 }
