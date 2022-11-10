@@ -36,19 +36,10 @@ public class UserService extends ServiceTemplate {
     }
 
 
-    public interface RegisterObserver extends ServiceTemplate.ServiceObserver {
-        void registerSucceeded(User user, AuthToken authToken);
-    }
+//    public interface RegisterObserver extends ServiceTemplate.ServiceObserver {
+//        void registerSucceeded(User user, AuthToken authToken);
+//    }
 
-    public interface GetUserObserver extends ServiceTemplate.ServiceObserver {
-        void getUserSucceeded(User user);
-    }
-
-    public void getUser(String userAlias, GetUserObserver getUserObserver) {
-        GetUserTask getUserTask = new GetUserTask(Cache.getInstance().getCurrUserAuthToken(),
-                userAlias, new GetUserHandler(getUserObserver));
-        execute(getUserTask);
-    }
 
     public void login(String username, String password, AuthServiceObserver loginObserver) {
         // Send the login request.
@@ -100,6 +91,16 @@ public class UserService extends ServiceTemplate {
 
             observer.authSuccess(registeredUser, authToken);
         }
+    }
+
+    public interface GetUserObserver extends ServiceTemplate.ServiceObserver {
+        void getUserSucceeded(User user);
+    }
+
+    public void getUser(String userAlias, GetUserObserver getUserObserver) {
+        GetUserTask getUserTask = new GetUserTask(Cache.getInstance().getCurrUserAuthToken(),
+                userAlias, new GetUserHandler(getUserObserver));
+        execute(getUserTask);
     }
 
     /**

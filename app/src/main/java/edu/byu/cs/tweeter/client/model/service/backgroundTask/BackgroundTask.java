@@ -38,7 +38,8 @@ public abstract class BackgroundTask implements Runnable {
     protected abstract void runTask() throws IOException;
 
     protected FakeData getFakeData() {
-        return new FakeData();
+//        return new FakeData();
+        return FakeData.getInstance();
     }
 
     /**

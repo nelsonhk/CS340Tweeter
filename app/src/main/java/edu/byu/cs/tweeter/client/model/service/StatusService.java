@@ -58,10 +58,10 @@ public class StatusService extends ServiceTemplate {
             super(getStoryObserver);
         }
 
-        @Override
-        public void callObserver(List items, boolean hasMorePages) {
-            observer.getItemsSuccess(items, hasMorePages);
-        }
+//        @Override
+//        public void callObserver(List items, boolean hasMorePages) {
+//            observer.getItemsSuccess(items, hasMorePages);
+//        }
     }
 
     public void getFeed(AuthToken authToken, User user, int PAGE_SIZE, Status lastStatus,
@@ -80,10 +80,10 @@ public class StatusService extends ServiceTemplate {
             super(getFeedObserver);
         }
 
-        @Override
-        public void callObserver(List items, boolean hasMorePages) {
-            observer.getItemsSuccess(items, hasMorePages);
-        }
+//        @Override
+//        public void callObserver(List items, boolean hasMorePages) {
+//            observer.getItemsSuccess(items, hasMorePages);
+//        }
     }
 
 }

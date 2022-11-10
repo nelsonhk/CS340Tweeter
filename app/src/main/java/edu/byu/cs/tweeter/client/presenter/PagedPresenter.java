@@ -31,7 +31,7 @@ public abstract class PagedPresenter<T> extends Presenter {
         setLoading(true);
         ((PagedView) view).setLoadingFooter(true);
         createService();
-    };
+    }
 
     public void getUser(String username) {
         new UserService().getUser(username, new GetUserObserver());

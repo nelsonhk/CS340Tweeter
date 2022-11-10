@@ -17,6 +17,8 @@ import edu.byu.cs.tweeter.model.domain.User;
 
 public class MainPresenter extends Presenter {
 
+    private StatusService statusService;
+
     public MainPresenter(MainView mainView) {
         super(mainView);
     }
@@ -30,6 +32,13 @@ public class MainPresenter extends Presenter {
         void updateFollowingAndFollowersCounts();
         void setFollowerCount(int count);
         void setFollowingCount(int count);
+    }
+
+    public StatusService getStatusService() {
+        if (statusService == null) {
+            statusService = new StatusService();
+        }
+        return statusService;
     }
 
     public void getFollowingCount(User selectedUser, Executor executor) {
@@ -73,13 +82,13 @@ public class MainPresenter extends Presenter {
 
         try {
             Status newStatus = new Status(post, Cache.getInstance().getCurrUser(), getFormattedDateTime(), parseURLs(post), parseMentions(post));
-            new StatusService().postStatus(newStatus, new PostStatusObserver());
+            getStatusService().postStatus(newStatus, new PostStatusObserver());
         } catch (Exception ex) {
             view.displayErrorMessage("Failed to post the status because of exception: " + ex.getMessage());
         }
     }
 
-    private class PostStatusObserver implements StatusService.PostStatusObserver {
+    public class PostStatusObserver implements StatusService.PostStatusObserver {
 
         @Override
         public void postStatusSuccess() {

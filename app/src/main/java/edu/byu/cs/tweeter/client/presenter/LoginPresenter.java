@@ -13,6 +13,12 @@ public class LoginPresenter extends AuthPresenter {
     }
 
     @Override
+    public void authSuccess(String firstName, String lastName, String username,
+                            String password, ImageView imageToUpload) {
+        new UserService().login(username, password, this);
+    }
+
+    @Override
     public String validateInputs(String firstName, String lastName, String username,
                                  String password, ImageView imageToUpload) {
         if (username.charAt(0) != '@') {
@@ -25,11 +31,6 @@ public class LoginPresenter extends AuthPresenter {
             return "Password cannot be empty.";
         }
         return null;
-    }
-
-    @Override
-    public void authSuccess(String firstName, String lastName, String username, String password, ImageView imageToUpload) {
-        new UserService().login(username, password, this);
     }
 
     @Override

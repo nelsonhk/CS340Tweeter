@@ -20,9 +20,7 @@ public abstract class PagedBackgroundTaskHandler<T extends ServiceTemplate.Paged
     protected void handleSuccessMessage(ServiceTemplate.PagedServiceObserver observer, Bundle data) {
         List<T> items = (List<T>) data.getSerializable(PagedTask.ITEMS_KEY);
         boolean hasMorePages = data.getBoolean(PagedTask.MORE_PAGES_KEY);
-        callObserver(items, hasMorePages);
+        observer.getItemsSuccess(items, hasMorePages);
     }
-
-    public abstract void callObserver(List items, boolean hasMorePages);
 
 }

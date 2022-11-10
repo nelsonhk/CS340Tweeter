@@ -30,7 +30,6 @@ public abstract class BackgroundTaskHandler<T extends ServiceTemplate.ServiceObs
         } else if (msg.getData().containsKey(BackgroundTask.EXCEPTION_KEY)) {
             Exception ex = (Exception) msg.getData().getSerializable(BackgroundTask.EXCEPTION_KEY);
             observer.handleFailure(ex.getMessage());
-//            observer.handleException(ex);
         }
     }
 

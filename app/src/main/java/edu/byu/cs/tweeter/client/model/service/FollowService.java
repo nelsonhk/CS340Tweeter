@@ -156,10 +156,10 @@ public class FollowService extends ServiceTemplate {
             super(getFollowingObserver);
         }
 
-        @Override
-        public void callObserver(List items, boolean hasMorePages) {
-            observer.getItemsSuccess(items, hasMorePages);
-        }
+//        @Override
+//        public void callObserver(List items, boolean hasMorePages) {
+//            observer.getItemsSuccess(items, hasMorePages);
+//        }
     }
 
 //    public interface GetFollowersObserver extends PagedServiceObserver {}
@@ -180,10 +180,10 @@ public class FollowService extends ServiceTemplate {
             super(getFollowersObserver);
         }
 
-        @Override
-        public void callObserver(List items, boolean hasMorePages) {
-            observer.getItemsSuccess(items, hasMorePages);
-        }
+//        @Override
+//        public void callObserver(List items, boolean hasMorePages) {
+//            observer.getItemsSuccess(items, hasMorePages);
+//        }
     }
 
 }
